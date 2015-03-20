@@ -28,7 +28,17 @@ class SmileExperiment:
 							, win 				= self.win
 							, size 				= 0.15
 							, SoundName 		= "experiment data/sounds/C1.wav"
-							) 
+							)
+
+		self.ratingScale = visual.RatingScale(self.win
+							, scale			= 'Par rapport a la voix A, a quel niveau la voix B est souriante?'
+							, low 			= -10
+							, high 			= 10
+							, textColor		= 'black'
+							, lineColor		= 'black'
+							, size 			= 1.5
+						)
+
 		self.TxtSonA = visual.TextStim(self.win, text = "Son A : ", pos = ( -0.5, 0.6), color = 'black')
 		self.TxtSonB = visual.TextStim(self.win, text = "Son B : ", pos = ( +0.1, 0.6), color = 'black')
 
@@ -51,8 +61,10 @@ class SmileExperiment:
 	def generateDisplay(self):
 		self.S1.Draw()	
 		self.S2.Draw()
-		self.TxtSonA.draw()
-		self.TxtSonB.draw()	
+		self.TxtSonA.autoDraw = True
+		self.TxtSonB.autoDraw = True
+
+	
 		self.win.flip()
 
 	def TextStimuli(self, Fname, duration):
@@ -77,24 +89,15 @@ class SmileExperiment:
 		ITItime = 0.5 #Inter Trial Interval
 		self.TextStimuli(Fname = "Intro.txt", duration = 1.0)		
 
-		self.ratingScale = visual.RatingScale(self.win
-							, scale			= 'Par rapport au son A, a quel niveau le son B est souriant?'
-							, low 			= -10
-							, high 			= 10
-							, textColor		= 'black'
-							, lineColor		= 'black'
-							, size 			= 1.0
-						)
-
 		self.ITI(ITItime)
 
+		self.generateDisplay()
 		while self.ratingScale.noResponse:
-
+			
 			self.ratingScale.draw()
-			self.generateDisplay()
-			#self.win.flip()
-
+			self.win.flip()
 			ClickPos = self.MouseClick()
+
 			self.S1.Clicked(ClickPos, self.s)
 			self.S2.Clicked(ClickPos, self.s)
 

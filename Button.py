@@ -5,14 +5,15 @@ class Button(object):
 		self.pos 				= pos 
 		self.Image  			= ImageName
 		self.ClickedImage  		= ClickedImage
-		ImgContainer 			= None
 		self.win 				= win
 		self.size				= size
 
-	def Draw(self):
-		self.ImgContainer = visual.ImageStim(self.win, image = self.Image, mask = None, units = '', pos = self.pos)
+		self.ImgContainer 		= visual.ImageStim(self.win, image = self.Image, mask = None, units = '', pos = self.pos)
 		self.ImgContainer.setSize(self.size)
-		self.ImgContainer.draw(self.win)
+
+	def Draw(self):
+		self.ImgContainer.draw()
+		self.ImgContainer.autoDraw = True
 
 	def Clicked(self, ClickPos):
 		if self.ImgContainer.contains( ClickPos ):
