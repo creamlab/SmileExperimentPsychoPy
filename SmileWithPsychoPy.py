@@ -12,6 +12,8 @@ class SmileExperiment:
 		self.expClock 	= core.Clock()
 		self.clickGap 	= .1 #seconds
 
+		self.ratingScale = None
+
 		self.S1 = ImageForSound(	pos 		= ( -0.3, 0.7)
 							, ImageName 		= "experiment data/pics/play.png"
 							, ClickedImage	 	= "experiment data/pics/play_small.png"
@@ -28,18 +30,7 @@ class SmileExperiment:
 							, SoundName 		= "experiment data/sounds/C1.wav"
 							) 
 
-
-		self.ContinueButton	= Button( pos 		= (0, -0.5)
-							, ImageName 		= "experiment data/pics/next.png"
-							, ClickedImage	 	= "experiment data/pics/next_press.png"
-							, win 				= self.win
-							, size 				= 0.3
-							) 
-
-		self.Slider 		= Slider(pos = (0,0), height = 0.1, width = 1.3, size = 0.2, LeftText = "", RighText = "", win = self.win)
-
-
-		self.s 			= Server().boot() #Audio Server
+		self.s 				= Server().boot() #Audio Server
 		self.s.start()
 
 
@@ -58,8 +49,6 @@ class SmileExperiment:
 	def generateDisplay(self):
 		self.S1.Draw()	
 		self.S2.Draw()	
-		self.ContinueButton.Draw()
-		self.Slider.Draw()
 		self.win.flip()
 
 	def TextStimuli(self, Fname, duration):
@@ -84,21 +73,34 @@ class SmileExperiment:
 		ITItime = 0.5 #Inter Trial Interval
 		self.TextStimuli(Fname = "Intro.txt", duration = 1.0)		
 
+		self.ratingScale = visual.RatingScale(self.win
+							, scale			= 'Par rapport au son A, a quel niveau le son B est souriant?'
+							, low 			= -10
+							, high 			= 10
+							, textColor		= 'black'
+							, lineColor		= 'black'
+							, size 			= 1.0
+						)
 
 		self.ITI(ITItime)
-		while True :
 
+		while self.ratingScale.noResponse:
+
+			self.ratingScale.draw()
 			self.generateDisplay()
+			self.win.flip()
 
 			ClickPos = self.MouseClick()
-
 			self.S1.Clicked(ClickPos, self.s)
 			self.S2.Clicked(ClickPos, self.s)
 
+			
+
+		rating 			= self.ratingScale.getRating()
+		decisionTime 	= self.ratingScale.getRT()
+		choiceHistory 	= self.ratingScale.getHistory()
+
 			#time.sleep(0.1)
-				
-			if self.ContinueButton.Clicked(ClickPos):
-				break
 
 		self.ITI(ITItime)
 				

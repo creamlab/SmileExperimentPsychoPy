@@ -23,7 +23,6 @@ class Slider(object):
 		ImgContainerR 	= None
 
 	def Draw(self):
-		
 		self.rect.draw()
 		
 		Left_pos		  	= (self.pos[0] - self.width/2, self.pos[1]) 
