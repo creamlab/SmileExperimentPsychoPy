@@ -1,4 +1,4 @@
-from psychopy import visual, core, event, visual #import some libraries from PsychoPy
+from psychopy import visual, core, event, visual, logging #import some libraries from PsychoPy
 from ImageForSound import *
 from Button import *
 import glob
@@ -64,7 +64,7 @@ class SmileExperiment:
 		with open (Fname, "r") as myfile:
 			IntroductionText = myfile.read().replace('\n', '')
 		
-		message = visual.TextStim(self.win, text = IntroductionText, color = (0, 0, 0), ) # Create a stimulus for a certain window
+		message = visual.TextStim(self.win, text = IntroductionText, color = 'black') # Create a stimulus for a certain window
 		message.draw() 	# Draw the stimulus to the window. We always draw at the back buffer of the window.
 		self.win.flip() # Flip back buffer and front  buffer of the window.
 		core.wait(duration) # Pause 5 s, so you get a chance to see it!
@@ -109,9 +109,11 @@ class SmileExperiment:
 				self.S1.Clicked(ClickPos, self.s)
 				self.S2.Clicked(ClickPos, self.s)
 
+
 			rating 			= self.ratingScale.getRating()
 			decisionTime 	= self.ratingScale.getRT()
 			choiceHistory 	= self.ratingScale.getHistory()
+
 
 			self.ITI(ITItime)
 		
