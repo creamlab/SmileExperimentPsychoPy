@@ -14,21 +14,23 @@ class SmileExperiment:
 
 		self.ratingScale = None
 
-		self.S1 = ImageForSound(	pos 		= ( -0.3, 0.7)
+		self.S1 = ImageForSound(	pos 		= ( - 0.3, 0.6)
 							, ImageName 		= "experiment data/pics/play.png"
 							, ClickedImage	 	= "experiment data/pics/play_small.png"
-							, win 				= self.win
-							, size 				= 0.3
+							, win				= self.win
+							, size 				= 0.15
 							, SoundName 		= "experiment data/sounds/C1.wav"
 							) 
 
-		self.S2 = ImageForSound(	pos 		= (+0.3, 0.7)
+		self.S2 = ImageForSound(	pos 		= ( + 0.3, 0.6)
 							, ImageName 		= "experiment data/pics/play.png"
 							, ClickedImage	 	= "experiment data/pics/play_small.png"
 							, win 				= self.win
-							, size 				= 0.3
+							, size 				= 0.15
 							, SoundName 		= "experiment data/sounds/C1.wav"
 							) 
+		self.TxtSonA = visual.TextStim(self.win, text = "Son A : ", pos = ( -0.5, 0.6), color = 'black')
+		self.TxtSonB = visual.TextStim(self.win, text = "Son B : ", pos = ( +0.1, 0.6), color = 'black')
 
 		self.s 				= Server().boot() #Audio Server
 		self.s.start()
@@ -48,7 +50,9 @@ class SmileExperiment:
     # Display Functions
 	def generateDisplay(self):
 		self.S1.Draw()	
-		self.S2.Draw()	
+		self.S2.Draw()
+		self.TxtSonA.draw()
+		self.TxtSonB.draw()	
 		self.win.flip()
 
 	def TextStimuli(self, Fname, duration):
@@ -88,7 +92,7 @@ class SmileExperiment:
 
 			self.ratingScale.draw()
 			self.generateDisplay()
-			self.win.flip()
+			#self.win.flip()
 
 			ClickPos = self.MouseClick()
 			self.S1.Clicked(ClickPos, self.s)
