@@ -1,7 +1,7 @@
 from psychopy import visual, core, event, visual #import some libraries from PsychoPy
 from ImageForSound import *
 from Button import *
-from Slider import *
+import glob
 
 class SmileExperiment:
  	def __init__(self):
@@ -30,14 +30,7 @@ class SmileExperiment:
 							, SoundName 		= "experiment data/sounds/C1.wav"
 							)
 
-		self.ratingScale = visual.RatingScale(self.win
-							, scale			= 'Par rapport a la voix A, a quel niveau la voix B est souriante?'
-							, low 			= -10
-							, high 			= 10
-							, textColor		= 'black'
-							, lineColor		= 'black'
-							, size 			= 1.5
-						)
+		self.ratingScale = None
 
 		self.TxtSonA = visual.TextStim(self.win, text = "Son A : ", pos = ( -0.5, 0.6), color = 'black')
 		self.TxtSonB = visual.TextStim(self.win, text = "Son B : ", pos = ( +0.1, 0.6), color = 'black')
@@ -92,25 +85,37 @@ class SmileExperiment:
 		self.ITI(ITItime)
 
 		self.generateDisplay()
-		while self.ratingScale.noResponse:
-			
-			self.ratingScale.draw()
-			self.win.flip()
-			ClickPos = self.MouseClick()
 
-			self.S1.Clicked(ClickPos, self.s)
-			self.S2.Clicked(ClickPos, self.s)
+		os.chdir("experiment data/sounds")
+		for file in glob.glob("*.wav"): # Wav Files
 
-			
+			self.S1.SetSound(str(file))
+			self.S2.SetSound("../Modified Sounds/"+str(file))
+			self.ratingScale = visual.RatingScale(self.win
+								, scale			= 'Par rapport a la voix A, a quel niveau la voix B est souriante?'
+								, low 			= -10
+								, high 			= 10
+								, textColor		= 'black'
+								, lineColor		= 'black'
+								, size 			= 1.5
+							)
 
-		rating 			= self.ratingScale.getRating()
-		decisionTime 	= self.ratingScale.getRT()
-		choiceHistory 	= self.ratingScale.getHistory()
+			while self.ratingScale.noResponse:
 
-			#time.sleep(0.1)
+				self.ratingScale.draw()
+				self.win.flip()
+				ClickPos = self.MouseClick()
 
-		self.ITI(ITItime)
-				
+				self.S1.Clicked(ClickPos, self.s)
+				self.S2.Clicked(ClickPos, self.s)
+
+			rating 			= self.ratingScale.getRating()
+			decisionTime 	= self.ratingScale.getRT()
+			choiceHistory 	= self.ratingScale.getHistory()
+
+			self.ITI(ITItime)
+		
+		os.chdir("../..")		
 		self.EndOfExperiment()
 
 	# End
