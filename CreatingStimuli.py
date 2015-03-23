@@ -116,6 +116,6 @@ boo   = 6.15
 Q 	  = 1.12
 
 #PeakFilterWavFiles(boo, fr, Q)
-playFileWithEq(boo, fr, Q)
+#playFileWithEq(boo, fr, Q)
 #RisingPeakFilterInWavFiles(Start = -5, Stop = 10, fr = 3000, Q = 2)
 

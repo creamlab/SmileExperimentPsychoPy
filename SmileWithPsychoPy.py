@@ -40,18 +40,21 @@ class SmileExperiment:
 		self.TxtSonA	= visual.TextStim(self.win, text = "Son A : ", pos = ( -0.5, 0.6), color = 'black')
 		self.TxtSonB  	= visual.TextStim(self.win, text = "Son B : ", pos = ( +0.1, 0.6), color = 'black')
 
-
-		self.PasSouriante  		= visual.TextStim(self.win, text = "Pas du tout souriante", pos = ( -0.75, -0.4), color = 'black')
-		self.TresSouriante  	= visual.TextStim(self.win, text = "Tres souriante", pos = ( 0.7, -0.4), color = 'black')
+		PasSouriant = "Pas du tout souriante"
+		TresSouriant = "Tres souriante"
+		
+		self.PasSouriante  		= visual.TextStim(self.win, text = PasSouriant, pos = ( -0.75, -0.4), color = 'black')
+		self.TresSouriante  	= visual.TextStim(self.win, text = TresSouriant, pos = ( 0.7, -0.4), color = 'black')
 		self.PasSouriante.height 	= 0.06
 		self.TresSouriante.height 	= 0.06
 
 		self.s			= Server().boot() #Audio Server
 		self.s.start()
 
-		self.ResultsName = "participant data/Results.csv"
+		#For Writing Results
+		TotalFiles = len(glob.glob('participant data/*.csv'))
+		self.ResultsName = "participant data/Results_"+ str(TotalFiles) +".csv"
 		self.fieldnames  = ['File_A', 'File_B', 'Note', 'DecisionTime','A is neutral', 'B is neutral', 'Gain', 'freq', 'Cue']
-
 		with open(self.ResultsName, 'w') as csvfile:
 			writer		= csv.DictWriter(csvfile, fieldnames = self.fieldnames)
 			writer.writeheader()
@@ -62,7 +65,8 @@ class SmileExperiment:
 		while True :
 			any_press 	= self.mouse.getPressed()
 			c 			= self.trialClock.getTime()
-			b1_press 	= any_press[0]	
+			b1_press 	= any_press[0]
+			time.sleep(0.01) # For controlling the process from taking too much CPU 
 			if b1_press and c - c_old > self.clickGap:
 				c_old = c
 				return self.mouse.getPos()
@@ -75,22 +79,17 @@ class SmileExperiment:
 		self.TxtSonB.autoDraw = True
 		self.PasSouriante.autoDraw  = True
 		self.TresSouriante.autoDraw = True
-
-
 		self.win.flip()
 
 	def TextStimuliUntillKey(self, Fname):
 		with codecs.open (Fname, "r", "utf-8") as myfile:
 			IntroductionText = myfile.read()
-		
-		message = visual.TextStim(self.win, text = IntroductionText, color = 'black') # Create a stimulus for a certain window
-		
-		print "La size est "+ str (message.size)
-		message.height = 0.05
-		print "La sizer est "+ str (message.size)
 
+		message = visual.TextStim(self.win, text = IntroductionText, color = 'black') # Create a stimulus for a certain window
+		message.height = 0.05
 		message.draw() 	# Draw the stimulus to the window. We always draw at the back buffer of the window.
 		self.win.flip() # Flip back buffer and front  buffer of the window.
+
 		while True:
 			if len(event.getKeys()) > 0: break
 			event.clearEvents()
@@ -116,7 +115,7 @@ class SmileExperiment:
 
 	# End
 	def EndOfExperiment(self):
-		self.TextStimuli(Fname = "Text/Outro.txt", duration = 4.0)
+		self.TextStimuli(Fname = "Text/Outro.txt", duration = 8.0)
 		self.win.close() # Close the window
 		core.quit() # Close PsychoPy
 		self.s.stop()
@@ -149,7 +148,7 @@ class SmileExperiment:
 			self.S2.SetSound(Paths[1] + FName)
 						
 			self.ratingScale = visual.RatingScale(self.win
-								, scale			= 'Par rapport a la voix A, la voix B est elle ...'
+								, scale			= 'Par rapport a la voix A, la voix B est ...'
 								, low 			= -10
 								, high 			= 10
 								, textColor		= 'black'
