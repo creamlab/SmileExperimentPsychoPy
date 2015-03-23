@@ -1,5 +1,9 @@
-Dans cette expérience, votre tâche est de juger l'état émotionnel de différents sons.
+Votre tâche est de juger la quantité de sourire d’une voix par rapport à une autre.
 
-À chaque fois vous entendrez 2 enregistrements sonores: un son cible et un son de référence. A chaque fois, votre tâche est de comparer le son cible au son de référence à l'aide d'une série de sliders, correspondant à des adjectifs émotionnels. 
+À chaque fois vous entendrez deux enregistrements sonores. Vous devez comparer le son A au son B à l'aide d’un slider. 
 
-Toutes les opérations se font à la souris: cliquer sur les sons pour les jouer, cliquer sur les sliders pour y indiquer vos jugements, et cliquer sur le bouton "next" pour passer à la personne suivante. 
+Toutes les comparisons se font à la souris : cliquer sur les sons pour les jouer, cliquer sur le slider pour indiquer votre jugement puis valider votre choix.
+
+La question est toujours la même tout le long de l’expérience.
+
+(Appuyez sur une touche pour continuer)

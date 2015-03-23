@@ -119,4 +119,3 @@ Q 	  = 1.12
 playFileWithEq(boo, fr, Q)
 #RisingPeakFilterInWavFiles(Start = -5, Stop = 10, fr = 3000, Q = 2)
 
-

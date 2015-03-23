@@ -4,7 +4,7 @@ from Objects import Button
 import glob
 import csv
 from random import shuffle
-
+import codecs
 
 class SmileExperiment:
  	def __init__(self):
@@ -14,9 +14,9 @@ class SmileExperiment:
 		self.trialClock = core.Clock()
 		self.expClock 	= core.Clock()
 		self.clickGap 	= .1 #seconds
-
+		
 		self.ratingScale = None
-
+		
 		self.S1 = ImageForSound(	pos 		= ( - 0.3, 0.6)
 							, ImageName 		= "experiment data/pics/play.png"
 							, ClickedImage	 	= "experiment data/pics/play_small.png"
@@ -35,11 +35,16 @@ class SmileExperiment:
 
 		self.ratingScale = None
 
-
 		#for i in range (1,10):
 
 		self.TxtSonA	= visual.TextStim(self.win, text = "Son A : ", pos = ( -0.5, 0.6), color = 'black')
 		self.TxtSonB  	= visual.TextStim(self.win, text = "Son B : ", pos = ( +0.1, 0.6), color = 'black')
+
+
+		self.PasSouriante  		= visual.TextStim(self.win, text = "Pas du tout souriante", pos = ( -0.75, -0.4), color = 'black')
+		self.TresSouriante  	= visual.TextStim(self.win, text = "Tres souriante", pos = ( 0.7, -0.4), color = 'black')
+		self.PasSouriante.height 	= 0.06
+		self.TresSouriante.height 	= 0.06
 
 		self.s			= Server().boot() #Audio Server
 		self.s.start()
@@ -68,19 +73,40 @@ class SmileExperiment:
 		self.S2.Draw()
 		self.TxtSonA.autoDraw = True
 		self.TxtSonB.autoDraw = True
+		self.PasSouriante.autoDraw  = True
+		self.TresSouriante.autoDraw = True
 
-	
+
 		self.win.flip()
 
-	def TextStimuli(self, Fname, duration):
-		with open (Fname, "r") as myfile:
-			IntroductionText = myfile.read().replace('\n', '')
+	def TextStimuliUntillKey(self, Fname):
+		with codecs.open (Fname, "r", "utf-8") as myfile:
+			IntroductionText = myfile.read()
 		
 		message = visual.TextStim(self.win, text = IntroductionText, color = 'black') # Create a stimulus for a certain window
+		
+		print "La size est "+ str (message.size)
+		message.height = 0.05
+		print "La sizer est "+ str (message.size)
+
 		message.draw() 	# Draw the stimulus to the window. We always draw at the back buffer of the window.
 		self.win.flip() # Flip back buffer and front  buffer of the window.
-		core.wait(duration) # Pause 5 s, so you get a chance to see it!
+		while True:
+			if len(event.getKeys()) > 0: break
+			event.clearEvents()
+			core.wait(0.2)
 
+	def TextStimuli(self, Fname, duration):
+		with codecs.open (Fname, "r", "utf-8") as myfile:
+			IntroductionText = myfile.read()
+		
+		
+		message = visual.TextStim(self.win, text = IntroductionText, color = 'black') # Create a stimulus for a certain window		
+		message.draw() 	# Draw the stimulus to the window. We always draw at the back buffer of the window.
+		
+		self.win.flip() # Flip back buffer and front  buffer of the window.
+		core.wait(duration) # Pause 5 s, so you get a chance to see it!
+		
 	def ISI(self,duration): #Inter Stimulus Interval
 		self.win.flip()
 		core.wait(duration)
@@ -88,11 +114,21 @@ class SmileExperiment:
 	def ITI(self,duration): #Inter Trial Interval
 		self.ISI(duration)
 
-	# Main
+	# End
+	def EndOfExperiment(self):
+		self.TextStimuli(Fname = "Text/Outro.txt", duration = 4.0)
+		self.win.close() # Close the window
+		core.quit() # Close PsychoPy
+		self.s.stop()
+		time.slepp(2)
+		self.s.shutdown()
+
+
+	# ----- Main Experiment -------
 	def RunExperiment(self):
 		#Init
 		ITItime = 0.5 #Inter Trial Interval
-		self.TextStimuli(Fname = "Text/Intro.txt", duration = 1.0)		
+		self.TextStimuliUntillKey(Fname = "Text/Intro.txt")
 
 		self.ITI(ITItime)
 
@@ -113,7 +149,7 @@ class SmileExperiment:
 			self.S2.SetSound(Paths[1] + FName)
 						
 			self.ratingScale = visual.RatingScale(self.win
-								, scale			= 'Par rapport a la voix A, a quel niveau la voix B est souriante?'
+								, scale			= 'Par rapport a la voix A, la voix B est elle ...'
 								, low 			= -10
 								, high 			= 10
 								, textColor		= 'black'
@@ -149,16 +185,6 @@ class SmileExperiment:
 
 		self.ITI(ITItime)
 		self.EndOfExperiment()
-
-	# End
-	def EndOfExperiment(self):
-		self.TextStimuli(Fname = "Text/Outro.txt", duration = 1.0)
-		self.win.close() # Close the window
-		core.quit() # Close PsychoPy
-		self.s.stop()
-		time.slepp(2)
-		self.s.shutdown()
-
 ###
 ### End of experiment definition.
 
