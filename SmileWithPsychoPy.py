@@ -2,6 +2,9 @@ from psychopy import visual, core, event, visual, logging #import some libraries
 from Objects.ImageForSound import *
 from Objects import Button
 import glob
+import csv
+from random import shuffle
+
 
 class SmileExperiment:
  	def __init__(self):
@@ -32,12 +35,21 @@ class SmileExperiment:
 
 		self.ratingScale = None
 
-		self.TxtSonA = visual.TextStim(self.win, text = "Son A : ", pos = ( -0.5, 0.6), color = 'black')
-		self.TxtSonB = visual.TextStim(self.win, text = "Son B : ", pos = ( +0.1, 0.6), color = 'black')
 
-		self.s 				= Server().boot() #Audio Server
+		#for i in range (1,10):
+
+		self.TxtSonA	= visual.TextStim(self.win, text = "Son A : ", pos = ( -0.5, 0.6), color = 'black')
+		self.TxtSonB  	= visual.TextStim(self.win, text = "Son B : ", pos = ( +0.1, 0.6), color = 'black')
+
+		self.s			= Server().boot() #Audio Server
 		self.s.start()
 
+		self.ResultsName = "participant data/Results.csv"
+		self.fieldnames  = ['File_A', 'File_B', 'Note', 'DecisionTime','A is neutral', 'B is neutral', 'Gain', 'freq', 'Cue']
+
+		with open(self.ResultsName, 'w') as csvfile:
+			writer		= csv.DictWriter(csvfile, fieldnames = self.fieldnames)
+			writer.writeheader()
 
 	# Mouse Functions
 	def MouseClick(self):
@@ -85,12 +97,21 @@ class SmileExperiment:
 		self.ITI(ITItime)
 
 		self.generateDisplay()
+		ListOfFiles = []
 
-		os.chdir("experiment data/sounds")
-		for file in glob.glob("*.wav"): # Wav Files
+		for file in glob.glob("experiment data/sounds/*.wav"): # Wav Files
+			SplitPath = os.path.split(file) # Separate path in list 
+			SoundName = SplitPath[-1] # Get the last item of list in order to have the audio file name
+			ListOfFiles.append(SoundName)
 
-			self.S1.SetSound(str(file))
-			self.S2.SetSound("../Modified Sounds/"+str(file))
+		shuffle(ListOfFiles) # Random File Example order
+
+		Paths = ["experiment data/sounds/", "experiment data/Modified Sounds/"]
+		for FName in ListOfFiles:
+			shuffle(Paths) # Random A and B
+			self.S1.SetSound(Paths[0] + FName)
+			self.S2.SetSound(Paths[1] + FName)
+						
 			self.ratingScale = visual.RatingScale(self.win
 								, scale			= 'Par rapport a la voix A, a quel niveau la voix B est souriante?'
 								, low 			= -10
@@ -101,23 +122,32 @@ class SmileExperiment:
 							)
 
 			while self.ratingScale.noResponse:
-
 				self.ratingScale.draw()
 				self.win.flip()
-				ClickPos = self.MouseClick()
 
+				ClickPos = self.MouseClick()
 				self.S1.Clicked(ClickPos, self.s)
 				self.S2.Clicked(ClickPos, self.s)
-
 
 			rating 			= self.ratingScale.getRating()
 			decisionTime 	= self.ratingScale.getRT()
 			choiceHistory 	= self.ratingScale.getHistory()
 
 
-			self.ITI(ITItime)
-		
-		os.chdir("../..")		
+			with open(self.ResultsName, 'a') as csvfile :
+				writer = csv.DictWriter(csvfile, fieldnames = self.fieldnames)
+				writer.writerow({ 'File_A': Paths[0] + FName
+								, 'File_B': Paths[1] + FName
+								, 'Note'  : rating
+								, 'DecisionTime' : decisionTime
+								, 'A is neutral' : ("Modified" not in Paths[0])
+								, 'B is neutral' : ("Modified" not in Paths[1])
+								, 'Gain'  : 3
+								, 'freq'  : 2500
+								, 'Cue'	  : 1.12
+								})
+
+		self.ITI(ITItime)
 		self.EndOfExperiment()
 
 	# End

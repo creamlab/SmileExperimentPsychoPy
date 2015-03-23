@@ -29,7 +29,6 @@ class ImageForSound(Button):
 			return True
 
 		else:
-
 			return False
 
 	#Setters :
