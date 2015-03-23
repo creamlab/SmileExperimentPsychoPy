@@ -47,13 +47,12 @@ def PeakFilterWavFiles( boo, fr, Q):
 		s.recordOptions(dur=duration+0.1, filename=os.path.join(recpath, str(file)), fileformat=0, sampletype=0)
 		FName = str(file)
 
-		sf 	  = SfPlayer(FName, speed = 1, loop=False)
+		sf 	  = SfPlayer(FName, speed = 1, loop = False)
 		eq    = EQ(sf, freq=fr, q=Q, boost=boo, type=0)
 		eq = eq.mix(2)
 		eq.out()
 
 		s.start()
-		time.sleep(1)
 		s.shutdown()
 
 def RisingPeakFilterInWavFiles(Start, Stop, fr, Q):
@@ -112,10 +111,10 @@ def GeneratePinkNoiseFile():
 
 #GeneratePinkNoiseFile()
 fr    = 3000
-boo   = 6.15
-Q 	  = 1.12
+boo   = 10
+Q 	  = 1.5
 
-#PeakFilterWavFiles(boo, fr, Q)
+PeakFilterWavFiles(boo, fr, Q)
 #playFileWithEq(boo, fr, Q)
 #RisingPeakFilterInWavFiles(Start = -5, Stop = 10, fr = 3000, Q = 2)
 

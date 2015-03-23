@@ -52,7 +52,7 @@ class SmileExperiment:
 		self.s.start()
 
 		#For Writing Results
-		TotalFiles = len(glob.glob('participant data/*.csv'))
+		TotalFiles = len(glob.glob('participant data/*.csv')) + 1
 		self.ResultsName = "participant data/Results_"+ str(TotalFiles) +".csv"
 		self.fieldnames  = ['File_A', 'File_B', 'Note', 'DecisionTime','A is neutral', 'B is neutral', 'Gain', 'freq', 'Cue']
 		with open(self.ResultsName, 'w') as csvfile:
@@ -73,12 +73,16 @@ class SmileExperiment:
 
     # Display Functions
 	def generateDisplay(self):
-		self.S1.Draw()	
-		self.S2.Draw()
 		self.TxtSonA.autoDraw = True
 		self.TxtSonB.autoDraw = True
 		self.PasSouriante.autoDraw  = True
 		self.TresSouriante.autoDraw = True
+		
+		self.S1.ImgContainer.autoDraw = True
+		self.S2.ImgContainer.autoDraw = True
+		
+		self.S1.ImgContainer.draw()
+		self.S2.ImgContainer.draw()
 		self.win.flip()
 
 	def TextStimuliUntillKey(self, Fname):
@@ -107,11 +111,27 @@ class SmileExperiment:
 		core.wait(duration) # Pause 5 s, so you get a chance to see it!
 		
 	def ISI(self,duration): #Inter Stimulus Interval
+		self.TxtSonA.autoDraw = False
+		self.TxtSonB.autoDraw = False
+		self.PasSouriante.autoDraw  = False
+		self.TresSouriante.autoDraw = False
+		self.S2.ImgContainer.autoDraw = False
+		self.S1.ImgContainer.autoDraw = False
+		
 		self.win.flip()
 		core.wait(duration)
+		self.generateDisplay()
 
 	def ITI(self,duration): #Inter Trial Interval
-		self.ISI(duration)
+		self.TxtSonA.autoDraw = False
+		self.TxtSonB.autoDraw = False
+		self.PasSouriante.autoDraw  = False
+		self.TresSouriante.autoDraw = False
+		self.S2.ImgContainer.autoDraw = False
+		self.S1.ImgContainer.autoDraw = False
+		
+		self.win.flip()
+		core.wait(duration)
 
 	# End
 	def EndOfExperiment(self):
@@ -181,6 +201,7 @@ class SmileExperiment:
 								, 'freq'  : 2500
 								, 'Cue'	  : 1.12
 								})
+			self.ISI(0.7)
 
 		self.ITI(ITItime)
 		self.EndOfExperiment()

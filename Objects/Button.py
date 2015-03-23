@@ -11,9 +11,6 @@ class Button(object):
 		self.ImgContainer 		= visual.ImageStim(self.win, image = self.Image, mask = None, units = '', pos = self.pos)
 		self.ImgContainer.setSize(self.size)
 
-	def Draw(self):
-		self.ImgContainer.draw()
-		self.ImgContainer.autoDraw = True
 
 	def Clicked(self, ClickPos):
 		if self.ImgContainer.contains( ClickPos ):
@@ -33,3 +30,4 @@ class Button(object):
 
 	def SetPos(self, pos):
 		self.pos = pos
+
