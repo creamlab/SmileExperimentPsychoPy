@@ -1,6 +1,6 @@
 from psychopy import visual, core, event, visual, logging #import some libraries from PsychoPy
-from ImageForSound import *
-from Button import *
+from Objects.ImageForSound import *
+from Objects import Button
 import glob
 
 class SmileExperiment:
@@ -80,7 +80,7 @@ class SmileExperiment:
 	def RunExperiment(self):
 		#Init
 		ITItime = 0.5 #Inter Trial Interval
-		self.TextStimuli(Fname = "Intro.txt", duration = 1.0)		
+		self.TextStimuli(Fname = "Text/Intro.txt", duration = 1.0)		
 
 		self.ITI(ITItime)
 
@@ -122,7 +122,7 @@ class SmileExperiment:
 
 	# End
 	def EndOfExperiment(self):
-		self.TextStimuli(Fname = "Outro.txt", duration = 1.0)
+		self.TextStimuli(Fname = "Text/Outro.txt", duration = 1.0)
 		self.win.close() # Close the window
 		core.quit() # Close PsychoPy
 		self.s.stop()

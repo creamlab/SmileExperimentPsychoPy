@@ -1,9 +1,19 @@
+1- You might need for Stimuli generation :
+CreatingStimuli.py : 
 
-# You might need for psychoPy :
+function PeakFilterWavFiles( boo, fr, Q): : For all files inside “experiment data/sounds” create a sound file with a boost of “boo” db in the “fr” frequency spectrum with a cue of “Q”. 
+Output files are located in “experiment data/Modified sounds”
 
+
+function RisingPeakFilterInWavFiles(Start, Stop, fr, Q): : For all files inside “experiment data/sounds” create a corresponding sound with an automated bell filter follow ing a Ramp that will boost from “start” to “stop” dbs in the frequency fr with the Cue “Q”. 
+
+In order for these examples to work you will need the pyo package
+
+2- You might need for SmileWithPsychoPy.py :
+
+For psychoPy :
 sudo easy_install pip
 sudo pip install pyglet
 sudo pip install Pillow
 
-# You might need for Stimuli generation :
-
+SmileWithPsychoPy.py = Creates an experimental protocol for the smile experience.
