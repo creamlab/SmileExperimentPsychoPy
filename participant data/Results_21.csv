@@ -1,0 +1,4 @@
+File_A,File_B,Note,DecisionTime,A is neutral,B is neutral,Gain,freq,Cue
+experiment data/Modified Sounds/F5.wav,experiment data/sounds/F5.wav,-5,4.365,False,True,3,2500,1.12
+experiment data/sounds/C4.wav,experiment data/Modified Sounds/C4.wav,-2,4.023,True,False,3,2500,1.12
+experiment data/sounds/F6.wav,experiment data/Modified Sounds/F6.wav,4,1.186,True,False,3,2500,1.12

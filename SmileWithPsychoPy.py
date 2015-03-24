@@ -9,7 +9,6 @@ import codecs
 class SmileExperiment:
  	def __init__(self):
 		self.win 		= visual.Window(size=(1280, 800), pos=None, color=(255, 255, 255))
-
 		self.mouse 		= event.Mouse(visible = True, newPos = False, win = self.win)
 		self.trialClock = core.Clock()
 		self.expClock 	= core.Clock()
@@ -17,8 +16,8 @@ class SmileExperiment:
 		
 		self.ratingScale = None
 		
-		self.S1 = ImageForSound(	pos 		= ( - 0.3, 0.6)
-							, ImageName 		= "experiment data/pics/play.png"
+		self.S1 = ImageForSound(	pos 		= ( - 0.3, 0.6 )
+							, Image 			= "experiment data/pics/play.png"
 							, ClickedImage	 	= "experiment data/pics/play_small.png"
 							, win				= self.win
 							, size 				= 0.15
@@ -26,35 +25,42 @@ class SmileExperiment:
 							) 
 
 		self.S2 = ImageForSound(	pos 		= ( + 0.3, 0.6)
-							, ImageName 		= "experiment data/pics/play.png"
+							, Image 			= "experiment data/pics/play.png"
 							, ClickedImage	 	= "experiment data/pics/play_small.png"
 							, win 				= self.win
 							, size 				= 0.15
 							, SoundName 		= "experiment data/sounds/C1.wav"
 							)
 
-		self.ratingScale = None
+		self.ratingScale = visual.RatingScale(self.win
+							, scale			= 'Par rapport a la voix A, la voix B est ...'
+							, low 			= -10
+							, high 			= 10
+							, textColor		= 'black'
+							, lineColor		= 'black'
+							, size 			= 1.5
+							, markerColor	= 'black'
+							)
 
-		#for i in range (1,10):
 
 		self.TxtSonA	= visual.TextStim(self.win, text = "Son A : ", pos = ( -0.5, 0.6), color = 'black')
 		self.TxtSonB  	= visual.TextStim(self.win, text = "Son B : ", pos = ( +0.1, 0.6), color = 'black')
 
-		PasSouriant = "Pas du tout souriante"
-		TresSouriant = "Tres souriante"
+		PasSouriant 	= "Pas du tout souriante"
+		TresSouriant 	= "Tres souriante" # Sorry, no acents
 		
 		self.PasSouriante  		= visual.TextStim(self.win, text = PasSouriant, pos = ( -0.75, -0.4), color = 'black')
 		self.TresSouriante  	= visual.TextStim(self.win, text = TresSouriant, pos = ( 0.7, -0.4), color = 'black')
 		self.PasSouriante.height 	= 0.06
 		self.TresSouriante.height 	= 0.06
 
-		self.s			= Server().boot() #Audio Server
-		self.s.start()
+		self.s			= Server().boot() #Audio Server - Important for Playing Audio Files
+		self.s.start() # Start audio server
 
 		#For Writing Results
 		TotalFiles = len(glob.glob('participant data/*.csv')) + 1
 		self.ResultsName = "participant data/Results_"+ str(TotalFiles) +".csv"
-		self.fieldnames  = ['File_A', 'File_B', 'Note', 'DecisionTime','A is neutral', 'B is neutral', 'Gain', 'freq', 'Cue']
+		self.fieldnames  = ['File_A', 'File_B', 'Note', 'DecisionTime','A is neutral', 'B is neutral', 'Category', 'Gain', 'freq', 'Cue', 'Age', 'Sex', ]
 		with open(self.ResultsName, 'w') as csvfile:
 			writer		= csv.DictWriter(csvfile, fieldnames = self.fieldnames)
 			writer.writeheader()
@@ -73,13 +79,7 @@ class SmileExperiment:
 
     # Display Functions
 	def generateDisplay(self):
-		self.TxtSonA.autoDraw = True
-		self.TxtSonB.autoDraw = True
-		self.PasSouriante.autoDraw  = True
-		self.TresSouriante.autoDraw = True
-		
-		self.S1.ImgContainer.autoDraw = True
-		self.S2.ImgContainer.autoDraw = True
+		self.AutoDrawForAll(BoolAutoDraw = True)
 		
 		self.S1.ImgContainer.draw()
 		self.S2.ImgContainer.draw()
@@ -109,26 +109,25 @@ class SmileExperiment:
 		
 		self.win.flip() # Flip back buffer and front  buffer of the window.
 		core.wait(duration) # Pause 5 s, so you get a chance to see it!
-		
+	
+	def AutoDrawForAll(self, BoolAutoDraw):
+		self.TxtSonA.autoDraw 			= BoolAutoDraw
+		self.TxtSonB.autoDraw 			= BoolAutoDraw
+		self.PasSouriante.autoDraw  	= BoolAutoDraw
+		self.TresSouriante.autoDraw 	= BoolAutoDraw
+		self.S2.ImgContainer.autoDraw 	= BoolAutoDraw
+		self.S1.ImgContainer.autoDraw 	= BoolAutoDraw
+		self.ratingScale.autoDraw 		= BoolAutoDraw
+
 	def ISI(self,duration): #Inter Stimulus Interval
-		self.TxtSonA.autoDraw = False
-		self.TxtSonB.autoDraw = False
-		self.PasSouriante.autoDraw  = False
-		self.TresSouriante.autoDraw = False
-		self.S2.ImgContainer.autoDraw = False
-		self.S1.ImgContainer.autoDraw = False
+		self.AutoDrawForAll(BoolAutoDraw = False)
 		
 		self.win.flip()
 		core.wait(duration)
 		self.generateDisplay()
 
 	def ITI(self,duration): #Inter Trial Interval
-		self.TxtSonA.autoDraw = False
-		self.TxtSonB.autoDraw = False
-		self.PasSouriante.autoDraw  = False
-		self.TresSouriante.autoDraw = False
-		self.S2.ImgContainer.autoDraw = False
-		self.S1.ImgContainer.autoDraw = False
+		self.AutoDrawForAll(BoolAutoDraw = False)
 		
 		self.win.flip()
 		core.wait(duration)
@@ -147,6 +146,11 @@ class SmileExperiment:
 	def RunExperiment(self):
 		#Init
 		ITItime = 0.5 #Inter Trial Interval
+
+		#Subject Info
+		#TODO
+
+		#Intro
 		self.TextStimuliUntillKey(Fname = "Text/Intro.txt")
 
 		self.ITI(ITItime)
@@ -163,32 +167,25 @@ class SmileExperiment:
 
 		Paths = ["experiment data/sounds/", "experiment data/Modified Sounds/"]
 		for FName in ListOfFiles:
-			shuffle(Paths) # Random A and B
+			
+			# Random A and B Sounds
+			shuffle(Paths) 
 			self.S1.SetSound(Paths[0] + FName)
 			self.S2.SetSound(Paths[1] + FName)
-						
-			self.ratingScale = visual.RatingScale(self.win
-								, scale			= 'Par rapport a la voix A, la voix B est ...'
-								, low 			= -10
-								, high 			= 10
-								, textColor		= 'black'
-								, lineColor		= 'black'
-								, size 			= 1.5
-							)
+			
+			self.ratingScale.reset(True)
 
 			while self.ratingScale.noResponse:
 				self.ratingScale.draw()
 				self.win.flip()
-
 				ClickPos = self.MouseClick()
 				self.S1.Clicked(ClickPos, self.s)
 				self.S2.Clicked(ClickPos, self.s)
 
 			rating 			= self.ratingScale.getRating()
 			decisionTime 	= self.ratingScale.getRT()
-			choiceHistory 	= self.ratingScale.getHistory()
 
-
+			# Write decisions :
 			with open(self.ResultsName, 'a') as csvfile :
 				writer = csv.DictWriter(csvfile, fieldnames = self.fieldnames)
 				writer.writerow({ 'File_A': Paths[0] + FName
@@ -203,12 +200,13 @@ class SmileExperiment:
 								})
 			self.ISI(0.7)
 
+
 		self.ITI(ITItime)
 		self.EndOfExperiment()
 ###
 ### End of experiment definition.
 
-##Script : 
+##Main Script - Calling main function and creating object : 
 exp = SmileExperiment()
 exp.RunExperiment()
 

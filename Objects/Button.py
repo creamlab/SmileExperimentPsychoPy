@@ -1,9 +1,9 @@
 from psychopy import visual, core, event, visual #import some libraries from PsychoPy
 
 class Button(object):
-	def __init__(self, pos = (0,0), ImageName = "", ClickedImage = "", win = None , size = 1):
+	def __init__(self, pos = (0,0), Image = "", ClickedImage = "", win = None , size = 1):
 		self.pos 				= pos 
-		self.Image  			= ImageName
+		self.Image  			= Image
 		self.ClickedImage  		= ClickedImage
 		self.win 				= win
 		self.size				= size
@@ -14,9 +14,6 @@ class Button(object):
 
 	def Clicked(self, ClickPos):
 		if self.ImgContainer.contains( ClickPos ):
-			#self.ImgContainer = visual.ImageStim(self.win, image = self.ClickedImage, mask = None, units = '', pos = self.pos)
-			#self.ImgContainer.setSize(self.size)
-			#self.ImgContainer.draw(self.win)
 			return True
 		else :
 			return False

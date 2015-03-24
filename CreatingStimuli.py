@@ -22,7 +22,6 @@ def playFileWithEq( boo, fr, Q):
 		continue
 	s.stop()
 
-
 def PeakFilterWavFiles( boo, fr, Q):
 	#Eq parameters
 	# fr : float or PyoObject, optional. Cutoff or center frequency of the filter. Defaults to 1000.
@@ -111,10 +110,11 @@ def GeneratePinkNoiseFile():
 
 #GeneratePinkNoiseFile()
 fr    = 3000
-boo   = 10
-Q 	  = 1.5
+boo   = 8
+Q 	  = 0.5
 
 PeakFilterWavFiles(boo, fr, Q)
+
 #playFileWithEq(boo, fr, Q)
 #RisingPeakFilterInWavFiles(Start = -5, Stop = 10, fr = 3000, Q = 2)
 
