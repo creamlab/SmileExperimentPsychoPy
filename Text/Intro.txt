@@ -1,9 +1,9 @@
-Votre tâche est de juger la quantité de sourire d’une voix par rapport à une autre.
+Nous sommes capables de juger par l’écoute d’une voix si l’interlocuteur est entrain de sourire ou non. C’est la tâche demandée dans cette expérience.
 
-À chaque fois vous entendrez deux enregistrements sonores. Vous devez comparer le son A au son B à l'aide d’un slider. 
+Vous allez entendre des séries de deux enregistrements. À chaque fois vous devez juger à quel point la deuxième voix a été produite avec un sourire par rapport à la première.
 
 Toutes les comparisons se font à la souris : cliquer sur les sons pour les jouer, cliquer sur le slider pour indiquer votre jugement puis valider votre choix.
 
-La question est toujours la même tout le long de l’expérience.
+La question est la même tout le long de l’expérience.
 
 (Appuyez sur une touche pour continuer)

@@ -9,7 +9,7 @@ def playFileWithEq( boo, fr, Q):
 	s = Server().boot()
 	s.start()
 
-	FName = "experiment data/sounds/C1.wav"
+	FName = "experiment data/Sounds For Stimuli/C1.wav"
 	sf 	  = SfPlayer(FName, speed = 1, loop=False)
 	trig  = TrigRand(sf['trig'])
 
@@ -31,21 +31,21 @@ def PeakFilterWavFiles( boo, fr, Q):
 	s = Server(duplex=0, audio="offline").boot()
 
 	# output folder
-	recpath = os.path.join(os.path.expanduser("~"), "Desktop/Cream/Experiments/SmileExperimentPsychoPy/experiment data", "Modified Sounds")
+	recpath = os.path.join(os.path.expanduser("~"), "Desktop/Cream/Experiments/SmileExperimentPsychoPy/experiment data", "SoundsForExperiment")
 	if not os.path.isdir(recpath):
 		os.mkdir(recpath)
 
 
 	#Input folder
-	os.chdir("experiment data/sounds")
-	for file in glob.glob("*.wav"): # Wav Files
+	for file in glob.glob("experiment data/Sounds For Stimuli/*.wav"): # Wav Files
+		SplitPath = os.path.split(file) # Separate path in list 
 		s.boot()
-		name = str(file)
+		name = SplitPath[-1] # Get the last item of list in order to have the audio file name
 
 		duration = sndinfo(file)[1]
-		s.recordOptions(dur=duration+0.1, filename=os.path.join(recpath, str(file)), fileformat=0, sampletype=0)
+		s.recordOptions(dur = duration + 0.1, filename = os.path.join(recpath, str(boo) + "_" + name), fileformat=0, sampletype=0)
+		
 		FName = str(file)
-
 		sf 	  = SfPlayer(FName, speed = 1, loop = False)
 		eq    = EQ(sf, freq=fr, q=Q, boost=boo, type=0)
 		eq = eq.mix(2)
@@ -68,7 +68,7 @@ def RisingPeakFilterInWavFiles(Start, Stop, fr, Q):
 		os.mkdir(recpath)
 
 	#Input folder
-	os.chdir("experiment data/sounds")
+	os.chdir("experiment data/Sounds For Stimuli")
 	for file in glob.glob("*.wav"): # Wav Files
 		s.boot()
 		name = str(file)
@@ -95,7 +95,7 @@ def GeneratePinkNoiseFile():
 	s = Server(duplex=0, audio="offline").boot()
 
 	# output folder
-	recpath = os.path.join(os.path.expanduser("~"), os.getcwd()+"/experiment data", "sounds")
+	recpath = os.path.join(os.path.expanduser("~"), os.getcwd()+"/experiment data", "Sounds For Stimuli")
 	if not os.path.isdir(recpath):
 		os.mkdir(recpath)
 
@@ -109,12 +109,12 @@ def GeneratePinkNoiseFile():
 
 
 #GeneratePinkNoiseFile()
-fr    = 3000
-boo   = 8
-Q 	  = 0.5
 
-PeakFilterWavFiles(boo, fr, Q)
+ListOfboosts = [ -15 ,-10 , -5, 0, 5, 10, 15]
+fr    = 3000
+Q 	  = 0.4
+for boost in ListOfboosts:
+	PeakFilterWavFiles(boost, fr, Q)
 
 #playFileWithEq(boo, fr, Q)
 #RisingPeakFilterInWavFiles(Start = -5, Stop = 10, fr = 3000, Q = 2)
-

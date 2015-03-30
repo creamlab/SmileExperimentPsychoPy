@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from psychopy import visual, core, event, visual, logging #import some libraries from PsychoPy
 from Objects.ImageForSound import *
 from Objects import Button
@@ -7,16 +9,15 @@ from random import shuffle
 import codecs
 
 class SmileExperiment:
- 	def __init__(self):
+	def __init__(self):
 		self.win 		= visual.Window(size=(1280, 800), pos=None, color=(255, 255, 255))
 		self.mouse 		= event.Mouse(visible = True, newPos = False, win = self.win)
 		self.trialClock = core.Clock()
 		self.expClock 	= core.Clock()
 		self.clickGap 	= .1 #seconds
-		
 		self.ratingScale = None
-		
-		self.S1 = ImageForSound(	pos 		= ( - 0.3, 0.6 )
+
+		self.S1 = ImageForSound(	pos 		= ( 0.3, 0.6 )
 							, Image 			= "experiment data/pics/play.png"
 							, ClickedImage	 	= "experiment data/pics/play_small.png"
 							, win				= self.win
@@ -24,7 +25,7 @@ class SmileExperiment:
 							, SoundName 		= "experiment data/sounds/C1.wav"
 							) 
 
-		self.S2 = ImageForSound(	pos 		= ( + 0.3, 0.6)
+		self.S2 = ImageForSound(	pos 		= ( + 0.3, 0.3)
 							, Image 			= "experiment data/pics/play.png"
 							, ClickedImage	 	= "experiment data/pics/play_small.png"
 							, win 				= self.win
@@ -33,34 +34,47 @@ class SmileExperiment:
 							)
 
 		self.ratingScale = visual.RatingScale(self.win
-							, scale			= 'Par rapport a la voix A, la voix B est ...'
-							, low 			= -10
-							, high 			= 10
-							, textColor		= 'black'
+							, scale			= ''
+							, low 			= 1.
+							, high 			= 10.
+							, textColor		= 'white'
 							, lineColor		= 'black'
 							, size 			= 1.5
 							, markerColor	= 'black'
+							, showValue		= False
+							, stretch		= 1.0
+							, acceptText	= 'Valider'
+							, precision		= 100
+							, tickHeight	= 0
 							)
 
+		#Arrows
+		self.ArrowR		= visual.ImageStim(self.win, image = "experiment data/pics/arrow_r.png", mask = None, units = '', pos = ( 0.45, -0.4))
+		self.ArrowL 	= visual.ImageStim(self.win, image = "experiment data/pics/arrow_l.png", mask = None, units = '', pos = ( -0.47, -0.4))
 
-		self.TxtSonA	= visual.TextStim(self.win, text = "Son A : ", pos = ( -0.5, 0.6), color = 'black')
-		self.TxtSonB  	= visual.TextStim(self.win, text = "Son B : ", pos = ( +0.1, 0.6), color = 'black')
+		#Son A and B text
+		self.TxtSonA	= visual.TextStim(self.win, text = u"Par rapport à ", pos = ( -0.1, 0.6), color = 'black')
+		self.TxtSonB  	= visual.TextStim(self.win, text = "trouvez-vous que ", pos = ( -0.1, 0.3), color = 'black')
+		self.TxtEst  	= visual.TextStim(self.win, text = "est dit avec : ", pos = ( -0, 0), color = 'black')
 
-		PasSouriant 	= "Pas du tout souriante"
-		TresSouriant 	= "Tres souriante" # Sorry, no acents
+
+		PasSouriant 	= "beaucoup moins de sourire"
+		TresSouriant 	= "beaucoup plus de sourire" # Sorry, no accents
 		
 		self.PasSouriante  		= visual.TextStim(self.win, text = PasSouriant, pos = ( -0.75, -0.4), color = 'black')
 		self.TresSouriante  	= visual.TextStim(self.win, text = TresSouriant, pos = ( 0.7, -0.4), color = 'black')
 		self.PasSouriante.height 	= 0.06
 		self.TresSouriante.height 	= 0.06
 
+		self.MidleLine	= visual.Line(self.win, start=(0, -0.45), end=(0, -0.35), lineColor = 'black', lineWidth=10)
 		self.s			= Server().boot() #Audio Server - Important for Playing Audio Files
 		self.s.start() # Start audio server
 
 		#For Writing Results
 		TotalFiles = len(glob.glob('participant data/*.csv')) + 1
 		self.ResultsName = "participant data/Results_"+ str(TotalFiles) +".csv"
-		self.fieldnames  = ['File_A', 'File_B', 'Note', 'DecisionTime','A is neutral', 'B is neutral', 'Category', 'Gain', 'freq', 'Cue', 'Age', 'Sex', ]
+		self.fieldnames  = ['File_A', 'File_B', 'Note', 'DecisionTime','Category', 'freq', 'Cue','A Gain', 'B Gain', 'Age', 'Sex', 'Completed']
+		
 		with open(self.ResultsName, 'w') as csvfile:
 			writer		= csv.DictWriter(csvfile, fieldnames = self.fieldnames)
 			writer.writeheader()
@@ -84,6 +98,34 @@ class SmileExperiment:
 		self.S1.ImgContainer.draw()
 		self.S2.ImgContainer.draw()
 		self.win.flip()
+
+	def CreateListOfFile(self,):
+
+		#List of all Files from which a stimulus has to be maid
+		ListOfFiles = []
+		for file in glob.glob("experiment data/Sounds For Stimuli/*.wav"): # Wav Files
+			SplitPath = os.path.split(file) # Separate path in list 
+			SoundName = SplitPath[-1] # Get the last item of list in order to have the audio file name
+			ListOfFiles.append(SoundName)
+		shuffle(ListOfFiles) # Random File Example order
+
+		#List of dbs to be compared 
+		ListOfDbs = [(0, 0)		
+					,(0, 5)		
+					,(-5, 5)	
+					,(-5, 10)	
+					,(-10, 10)	
+					,(-10, 15)	
+					,(-15, 15)]
+
+		Trials = []
+		for Name in ListOfFiles:
+			for pair in ListOfDbs:
+				NewPair = [ str(pair[0]) + "_" + Name, str(pair[1]) + "_" + Name]
+				shuffle(NewPair)
+				Trials.append(NewPair)
+		shuffle(Trials)
+		return Trials
 
 	def TextStimuliUntillKey(self, Fname):
 		with codecs.open (Fname, "r", "utf-8") as myfile:
@@ -113,11 +155,15 @@ class SmileExperiment:
 	def AutoDrawForAll(self, BoolAutoDraw):
 		self.TxtSonA.autoDraw 			= BoolAutoDraw
 		self.TxtSonB.autoDraw 			= BoolAutoDraw
+		self.TxtEst.autoDraw 			= BoolAutoDraw
 		self.PasSouriante.autoDraw  	= BoolAutoDraw
 		self.TresSouriante.autoDraw 	= BoolAutoDraw
 		self.S2.ImgContainer.autoDraw 	= BoolAutoDraw
 		self.S1.ImgContainer.autoDraw 	= BoolAutoDraw
 		self.ratingScale.autoDraw 		= BoolAutoDraw
+		self.ArrowR.autoDraw			= BoolAutoDraw
+		self.ArrowL.autoDraw			= BoolAutoDraw
+		self.MidleLine.autoDraw			= BoolAutoDraw
 
 	def ISI(self,duration): #Inter Stimulus Interval
 		self.AutoDrawForAll(BoolAutoDraw = False)
@@ -137,10 +183,11 @@ class SmileExperiment:
 		self.TextStimuli(Fname = "Text/Outro.txt", duration = 8.0)
 		self.win.close() # Close the window
 		core.quit() # Close PsychoPy
+
+		#Shut Down audio
 		self.s.stop()
 		time.slepp(2)
 		self.s.shutdown()
-
 
 	# ----- Main Experiment -------
 	def RunExperiment(self):
@@ -148,31 +195,21 @@ class SmileExperiment:
 		ITItime = 0.5 #Inter Trial Interval
 
 		#Subject Info
-		#TODO
+			#TODO
 
 		#Intro
 		self.TextStimuliUntillKey(Fname = "Text/Intro.txt")
-
 		self.ITI(ITItime)
-
 		self.generateDisplay()
-		ListOfFiles = []
+	
+		Path = "experiment data/SoundsForExperiment/"
 
-		for file in glob.glob("experiment data/sounds/*.wav"): # Wav Files
-			SplitPath = os.path.split(file) # Separate path in list 
-			SoundName = SplitPath[-1] # Get the last item of list in order to have the audio file name
-			ListOfFiles.append(SoundName)
+		for NamePair in self.CreateListOfFile():
+			SoundA = NamePair[0]
+			SoundB = NamePair[1]
 
-		shuffle(ListOfFiles) # Random File Example order
-
-		Paths = ["experiment data/sounds/", "experiment data/Modified Sounds/"]
-		for FName in ListOfFiles:
-			
-			# Random A and B Sounds
-			shuffle(Paths) 
-			self.S1.SetSound(Paths[0] + FName)
-			self.S2.SetSound(Paths[1] + FName)
-			
+			self.S1.SetSound(Path + SoundA)
+			self.S2.SetSound(Path + SoundB)
 			self.ratingScale.reset(True)
 
 			while self.ratingScale.noResponse:
@@ -185,24 +222,32 @@ class SmileExperiment:
 			rating 			= self.ratingScale.getRating()
 			decisionTime 	= self.ratingScale.getRT()
 
+			GainA	= int(SoundA[0: SoundA.find("_")])
+			GainB	= int(SoundB[0: SoundB.find("_")])
+
 			# Write decisions :
 			with open(self.ResultsName, 'a') as csvfile :
 				writer = csv.DictWriter(csvfile, fieldnames = self.fieldnames)
-				writer.writerow({ 'File_A': Paths[0] + FName
-								, 'File_B': Paths[1] + FName
+				writer.writerow({ 'File_A': Path + SoundA
+								, 'File_B': Path + SoundB
 								, 'Note'  : rating
 								, 'DecisionTime' : decisionTime
-								, 'A is neutral' : ("Modified" not in Paths[0])
-								, 'B is neutral' : ("Modified" not in Paths[1])
-								, 'Gain'  : 3
+								, 'A Gain'  : GainA
+								, 'B Gain'  : GainB
 								, 'freq'  : 2500
 								, 'Cue'	  : 1.12
 								})
 			self.ISI(0.7)
 
-
 		self.ITI(ITItime)
+
+		#Write Completed in result
+		with open(self.ResultsName, 'a') as csvfile :
+			writer = csv.DictWriter(csvfile, fieldnames = self.fieldnames)
+			writer.writerow({'Completed': "True"})
+		
 		self.EndOfExperiment()
+
 ###
 ### End of experiment definition.
 
