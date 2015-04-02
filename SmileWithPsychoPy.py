@@ -1,8 +1,8 @@
 # coding=utf-8
 
 from psychopy import visual, core, event, visual, logging #import some libraries from PsychoPy
-from Objects.ImageForSound import *
-from Objects import Button
+from PsychopyObjects.ImageForSound import *
+from PsychopyObjects import Button
 import glob
 import csv
 from random import shuffle
@@ -16,6 +16,9 @@ class SmileExperiment:
 		self.expClock 	= core.Clock()
 		self.clickGap 	= .1 #seconds
 		self.ratingScale = None
+
+		self.s			= Server().boot() #Audio Server - Important for Playing Audio Files
+		self.s.start() # Start audio server
 
 		self.S1 = ImageForSound(	pos 		= ( 0.3, 0.6 )
 							, Image 			= "experiment data/pics/play.png"
@@ -67,8 +70,6 @@ class SmileExperiment:
 		self.TresSouriante.height 	= 0.06
 
 		self.MidleLine	= visual.Line(self.win, start=(0, -0.45), end=(0, -0.35), lineColor = 'black', lineWidth=10)
-		self.s			= Server().boot() #Audio Server - Important for Playing Audio Files
-		self.s.start() # Start audio server
 
 		#For Writing Results
 		TotalFiles = len(glob.glob('participant data/*.csv')) + 1
