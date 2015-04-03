@@ -4,13 +4,12 @@ function normalize1(filedir)
 dBN = 70; 
 
 %% read all sounds
-filedir = 'experiment data/SoundsForExperiment';
-files = dir([filedir filesep '*.wav']); 
-
+files = dir([filedir filesep '*.wav']);
+length(files)
+pwd
 for i=1:length(files), 
     
-    fprintf(1,'normalize %s...',files(i).name); 
-    
+    fprintf(1,'normalize %s...',files(i).name);    
     filename = [filedir filesep files(i).name];
     [x,sr]=wavread(filename); 
     

@@ -1,9 +1,0 @@
-File_A,File_B,Note,DecisionTime,Category,freq,Cue,A Gain,B Gain,Age,Sex,Completed
-experiment data/SoundsForExperiment/0_Pn.wav,experiment data/SoundsForExperiment/0_Pn.wav,4.84,6.763,,2500,1.12,0,0,,,
-experiment data/SoundsForExperiment/-15_Pn.wav,experiment data/SoundsForExperiment/15_Pn.wav,5.98,6.914,,2500,1.12,-15,15,,,
-experiment data/SoundsForExperiment/0_Pn.wav,experiment data/SoundsForExperiment/5_Pn.wav,5.0,6.246,,2500,1.12,0,5,,,
-experiment data/SoundsForExperiment/5_Pn.wav,experiment data/SoundsForExperiment/-5_Pn.wav,5.8,6.725,,2500,1.12,5,-5,,,
-experiment data/SoundsForExperiment/-5_Pn.wav,experiment data/SoundsForExperiment/10_Pn.wav,5.08,6.541,,2500,1.12,-5,10,,,
-experiment data/SoundsForExperiment/10_Pn.wav,experiment data/SoundsForExperiment/-10_Pn.wav,4.95,6.31,,2500,1.12,10,-10,,,
-experiment data/SoundsForExperiment/15_Pn.wav,experiment data/SoundsForExperiment/-10_Pn.wav,5.34,6.866,,2500,1.12,15,-10,,,
-,,,,,,,,,,,True

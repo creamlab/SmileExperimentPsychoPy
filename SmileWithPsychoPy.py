@@ -7,6 +7,7 @@ import glob
 import csv
 from random import shuffle
 import codecs
+#from psychopy import gui
 
 class SmileExperiment:
 	def __init__(self):
@@ -196,7 +197,12 @@ class SmileExperiment:
 		ITItime = 0.5 #Inter Trial Interval
 
 		#Subject Info
-			#TODO
+		#info = {'Observer':'jwp', 'GratingOri':45, 'ExpVersion': 1.1, 'Group': ['Test', 'Control']}
+		#infoDlg = gui.DlgFromDict(dictionary=info, title='TestExperiment', fixed=['ExpVersion'])
+		#print "juste avant Dlg"
+		#if infoDlg.OK:
+		#	print info
+		#else: print 'User Cancelled'
 
 		#Intro
 		self.TextStimuliUntillKey(Fname = "Text/Intro.txt")
