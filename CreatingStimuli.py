@@ -108,9 +108,10 @@ def GeneratePinkNoiseFile(duration):
 
 #GeneratePinkNoiseFile(duration = 2)
 
-ListOfboosts = [ -15 ,-10 , -5, 0, 5, 10, 15]
+ListOfboosts = [ -10 , -5, 0, 5, 10]
 fr    = 2300
 Q 	  = 0.1
+
 for boost in ListOfboosts:
 	PeakFilterWavFiles(boost, fr, Q)
 

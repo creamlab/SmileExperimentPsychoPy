@@ -112,13 +112,12 @@ class SmileExperiment:
 		shuffle(ListOfFiles) # Random File Example order
 
 		#List of dbs to be compared 
-		ListOfDbs = [(0, 0)		
+		ListOfDbs = [(0, 0)
 					,(0, 5)		
 					,(-5, 5)	
 					,(-5, 10)	
 					,(-10, 10)	
-					,(-10, 15)	
-					,(-15, 15)]
+					]
 
 		Trials = []
 		for Name in ListOfFiles:

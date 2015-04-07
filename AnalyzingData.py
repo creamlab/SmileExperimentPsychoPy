@@ -4,13 +4,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-ListOfDbs = [(0, 0)		
+ListOfDbs = [(0, 0)
 			,(0, 5)		
 			,(-5, 5)	
 			,(-5, 10)	
 			,(-10, 10)	
-			,(-10, 15)	
-			,(-15, 15)]
+			]
+
+# ListOfDbs = [(5, 10)		
+# 			,(0, 5)		
+# 			,(-5, 0)	
+# 			,(-10, -5)	
+# 			]			
 
 def IsCompleted(file):
 	Completed = False
@@ -42,19 +47,22 @@ def FormatData(Data):
 	DataDict = {}
 	for i in range (0, len(Data)):
 		row = Data[i]
+
+		Note = row[PosNote] - 0.7 
+
 		GainPair = (row[PosGainA], row[PosGainB] )
 		if GainPair in ListOfDbs:
 			PairStr = str(GainPair)
-			DataDict.setdefault(PairStr,[]).append(row[PosNote])
+			DataDict.setdefault(PairStr,[]).append(Note)
 			print "La pairdB est : "+ PairStr
-			print "La note est : "+ str(row[PosNote])
+			print "La note est : "+ str(Note)
 			print
 
-		elif GainPair[::-1] in ListOfDbs:
+		elif GainPair[::-1] in ListOfDbs :
 				PairStr = str(GainPair[::-1])
-				DataDict.setdefault(PairStr,[]).append(-row[PosNote])
+				DataDict.setdefault(PairStr,[]).append(-Note)
 				print "La pairdB est : "+ PairStr
-				print "La note est : "+ str(-row[PosNote])
+				print "La note est : "+ str(-Note)
 				print
 
 		else:
@@ -113,6 +121,7 @@ error = []
 for PairOfGain in ListOfDbs:
 	x = DataDict.get(str(PairOfGain))
 	means.append(np.mean(x))
-	error.append(np.std(x))
+	error.append(np.std(x)/2)
+	print np.std(x)
 
 PlotData(DataDict, means, error)
