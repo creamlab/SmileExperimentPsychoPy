@@ -1,0 +1,4 @@
+File_A,File_B,Note,DecisionTime,Category,freq,Cue,A Gain,B Gain,Age,Sex,Completed
+experiment data/SoundsForExperiment/10_M2.wav,experiment data/SoundsForExperiment/-10_M2.wav,-7.57,20.393,,2500,1.12,10,-10,,,
+experiment data/SoundsForExperiment/10_F2.wav,experiment data/SoundsForExperiment/-10_F2.wav,-7.640000000000001,11.282,,2500,1.12,10,-10,,,
+experiment data/SoundsForExperiment/-10_F3.wav,experiment data/SoundsForExperiment/10_F3.wav,7.780000000000001,24.042,,2500,1.12,-10,10,,,

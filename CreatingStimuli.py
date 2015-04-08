@@ -4,6 +4,7 @@ import glob
 import os
 from scipy import io
 from numpy import linspace
+from DSP.NormalizeAudioFiles import *
 
 def playFileWithEq( boo, fr, Q):
 	s = Server().boot()
@@ -12,9 +13,7 @@ def playFileWithEq( boo, fr, Q):
 	FName = "experiment data/Sounds For Stimuli/C1.wav"
 	sf 	  = SfPlayer(FName, speed = 1, loop=False)
 	trig  = TrigRand(sf['trig'])
-
 	eq    = EQ(sf, freq=fr, q=Q, boost=boo, type=0)
-
 	eq = eq.mix(2)
 	eq.out()
 
@@ -47,17 +46,18 @@ def PeakFilterWavFiles( boo, fr, Q):
 		
 		FName = str(file)
 		sf 	  = SfPlayer(FName, speed = 1, loop = False)
-		eq    = EQ(sf, freq=fr, q=Q, boost=boo, type=0)
-		eq = eq.mix(2)
+		eq    = EQ(sf, freq=fr, q=Q, boost=boo, type=0, mul = 0.1)
+		eq 	  = eq.mix(2)
 		eq.out()
 
 		s.start()
 		s.shutdown()
 
+
 def RisingPeakFilterInWavFiles(Start, Stop, fr, Q):
 	#Start and stop boost in db
 	#fr : Frquency
-	#Q of the filter, defined as freq/bandwidth. Should be between 1 and 500. Defaults to 1.
+	#Q of the filter, defined as freq/bandwidth. Should be between 1 and 500. Default's to 1.
 	#The more the Q, the less bandwith
 
 	s = Server(duplex=0, audio="offline").boot()
@@ -79,8 +79,6 @@ def RisingPeakFilterInWavFiles(Start, Stop, fr, Q):
 		#Shape Ramp
 		boo = - LFO( freq = 1 / (2 * float(duration) ) , sharp = 1, type = 1)
 		
-
-		#boo = Fader(0.3, 0.5, duration, 1)
 		Delta = abs(Start - Stop)
 		boo = (Delta * boo) + Start
 		
@@ -91,7 +89,7 @@ def RisingPeakFilterInWavFiles(Start, Stop, fr, Q):
 		s.start()
 		s.shutdown()
 
-def GeneratePinkNoiseFile():
+def GeneratePinkNoiseFile(duration):
 	s = Server(duplex=0, audio="offline").boot()
 
 	# output folder
@@ -100,7 +98,6 @@ def GeneratePinkNoiseFile():
 		os.mkdir(recpath)
 
 	s.boot()
-	duration = 10
 	name = "Pn.wav"
 	s.recordOptions(dur = duration + 0.1, filename=os.path.join(recpath, name), fileformat=0, sampletype=0)
 	a = PinkNoise(.1).mix(2).out()
@@ -108,13 +105,16 @@ def GeneratePinkNoiseFile():
 	s.shutdown()
 
 
-#GeneratePinkNoiseFile()
+#GeneratePinkNoiseFile(duration = 2)
 
-ListOfboosts = [ -15 ,-10 , -5, 0, 5, 10, 15]
-fr    = 3000
-Q 	  = 0.4
+ListOfboosts = [ -10 , -5, 0, 5, 10]
+fr    = 4000
+Q 	  = 0.6
+
 for boost in ListOfboosts:
 	PeakFilterWavFiles(boost, fr, Q)
 
 #playFileWithEq(boo, fr, Q)
 #RisingPeakFilterInWavFiles(Start = -5, Stop = 10, fr = 3000, Q = 2)
+
+

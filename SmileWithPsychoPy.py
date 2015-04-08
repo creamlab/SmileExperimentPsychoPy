@@ -1,12 +1,13 @@
 # coding=utf-8
 
 from psychopy import visual, core, event, visual, logging #import some libraries from PsychoPy
-from Objects.ImageForSound import *
-from Objects import Button
+from PsychopyObjects.ImageForSound import *
+from PsychopyObjects import Button
 import glob
 import csv
 from random import shuffle
 import codecs
+#from psychopy import gui
 
 class SmileExperiment:
 	def __init__(self):
@@ -16,6 +17,9 @@ class SmileExperiment:
 		self.expClock 	= core.Clock()
 		self.clickGap 	= .1 #seconds
 		self.ratingScale = None
+
+		self.s			= Server().boot() #Audio Server - Important for Playing Audio Files
+		self.s.start() # Start audio server
 
 		self.S1 = ImageForSound(	pos 		= ( 0.3, 0.6 )
 							, Image 			= "experiment data/pics/play.png"
@@ -35,7 +39,7 @@ class SmileExperiment:
 
 		self.ratingScale = visual.RatingScale(self.win
 							, scale			= ''
-							, low 			= 1.
+							, low 			= -10.
 							, high 			= 10.
 							, textColor		= 'white'
 							, lineColor		= 'black'
@@ -67,8 +71,6 @@ class SmileExperiment:
 		self.TresSouriante.height 	= 0.06
 
 		self.MidleLine	= visual.Line(self.win, start=(0, -0.45), end=(0, -0.35), lineColor = 'black', lineWidth=10)
-		self.s			= Server().boot() #Audio Server - Important for Playing Audio Files
-		self.s.start() # Start audio server
 
 		#For Writing Results
 		TotalFiles = len(glob.glob('participant data/*.csv')) + 1
@@ -110,13 +112,15 @@ class SmileExperiment:
 		shuffle(ListOfFiles) # Random File Example order
 
 		#List of dbs to be compared 
-		ListOfDbs = [(0, 0)		
-					,(0, 5)		
-					,(-5, 5)	
-					,(-5, 10)	
-					,(-10, 10)	
-					,(-10, 15)	
-					,(-15, 15)]
+		# ListOfDbs = [(0, 0)
+		# 			,(0, 5)		
+		# 			,(-5, 5)	
+		# 			,(-5, 10)	
+		# 			,(-10, 10)	
+		# 			]
+
+		ListOfDbs = [(-10, 10)]
+
 
 		Trials = []
 		for Name in ListOfFiles:
@@ -126,6 +130,18 @@ class SmileExperiment:
 				Trials.append(NewPair)
 		shuffle(Trials)
 		return Trials
+
+	def WriteCompleted(self, True):
+		with open(self.ResultsName, 'rb') as file1, open('aux.csv', 'wb') as aux:
+			reader = csv.reader(file1)
+			writer = csv.writer(aux)
+			IndexCompleted = self.fieldnames.index('Completed')
+			for i, row in enumerate(reader):
+				if i == 1:
+					row[IndexCompleted] = 'True'
+				writer.writerow(row)
+
+			os.rename('aux.csv', self.ResultsName)
 
 	def TextStimuliUntillKey(self, Fname):
 		with codecs.open (Fname, "r", "utf-8") as myfile:
@@ -195,7 +211,12 @@ class SmileExperiment:
 		ITItime = 0.5 #Inter Trial Interval
 
 		#Subject Info
-			#TODO
+		#info = {'Observer':'jwp', 'GratingOri':45, 'ExpVersion': 1.1, 'Group': ['Test', 'Control']}
+		#infoDlg = gui.DlgFromDict(dictionary=info, title='TestExperiment', fixed=['ExpVersion'])
+		#print "juste avant Dlg"
+		#if infoDlg.OK:
+		#	print info
+		#else: print 'User Cancelled'
 
 		#Intro
 		self.TextStimuliUntillKey(Fname = "Text/Intro.txt")
@@ -212,6 +233,9 @@ class SmileExperiment:
 			self.S2.SetSound(Path + SoundB)
 			self.ratingScale.reset(True)
 
+			print "Le Gain de A est : "+ str(SoundA[0: SoundA.find("_")])
+			print "Le Gain de B est : "+ str(SoundB[0: SoundB.find("_")])
+
 			while self.ratingScale.noResponse:
 				self.ratingScale.draw()
 				self.win.flip()
@@ -220,6 +244,7 @@ class SmileExperiment:
 				self.S2.Clicked(ClickPos, self.s)
 
 			rating 			= self.ratingScale.getRating()
+			print "Le rating est : "+ str(rating)
 			decisionTime 	= self.ratingScale.getRT()
 
 			GainA	= int(SoundA[0: SoundA.find("_")])
@@ -237,14 +262,11 @@ class SmileExperiment:
 								, 'freq'  : 2500
 								, 'Cue'	  : 1.12
 								})
+
 			self.ISI(0.7)
 
 		self.ITI(ITItime)
-
-		#Write Completed in result
-		with open(self.ResultsName, 'a') as csvfile :
-			writer = csv.DictWriter(csvfile, fieldnames = self.fieldnames)
-			writer.writerow({'Completed': "True"})
+		self.WriteCompleted(True)
 		
 		self.EndOfExperiment()
 
