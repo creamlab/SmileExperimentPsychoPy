@@ -33,7 +33,7 @@ for i=1:length(files),
     
     
     %% save resampled sound
-    filename2 = [filedir filesep 'norm' filesep files(i).name];
+    filename2 = [filedir filesep files(i).name];
     warning off
     wavwrite(x,sr,filename2);
     warning on 

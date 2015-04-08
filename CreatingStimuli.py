@@ -54,7 +54,6 @@ def PeakFilterWavFiles( boo, fr, Q):
 		s.shutdown()
 
 
-
 def RisingPeakFilterInWavFiles(Start, Stop, fr, Q):
 	#Start and stop boost in db
 	#fr : Frquency
@@ -109,16 +108,11 @@ def GeneratePinkNoiseFile(duration):
 #GeneratePinkNoiseFile(duration = 2)
 
 ListOfboosts = [ -10 , -5, 0, 5, 10]
-fr    = 2300
-Q 	  = 0.1
+fr    = 4000
+Q 	  = 0.6
 
 for boost in ListOfboosts:
 	PeakFilterWavFiles(boost, fr, Q)
-
-time.sleep(1)
-
-#recpath = os.path.join(os.path.expanduser("~"), os.getcwd()+"/experiment data", "Sounds For Stimuli")
-#NormalizeAllSoundsInFolder(recpath)
 
 #playFileWithEq(boo, fr, Q)
 #RisingPeakFilterInWavFiles(Start = -5, Stop = 10, fr = 3000, Q = 2)

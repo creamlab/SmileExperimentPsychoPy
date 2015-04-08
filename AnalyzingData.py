@@ -4,18 +4,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-ListOfDbs = [(0, 0)
-			,(0, 5)		
-			,(-5, 5)	
-			,(-5, 10)	
-			,(-10, 10)	
-			]
-
-# ListOfDbs = [(5, 10)		
+# ListOfDbs = [(0, 0)
 # 			,(0, 5)		
-# 			,(-5, 0)	
-# 			,(-10, -5)	
-# 			]			
+# 			,(-5, 5)	
+# 			,(-5, 10)	
+# 			,(-10, 10)	
+# 			]
+
+ListOfDbs = [(-10, 10)]			
 
 def IsCompleted(file):
 	Completed = False
@@ -48,7 +44,7 @@ def FormatData(Data):
 	for i in range (0, len(Data)):
 		row = Data[i]
 
-		Note = row[PosNote] - 0.7 
+		Note = row[PosNote]
 
 		GainPair = (row[PosGainA], row[PosGainB] )
 		if GainPair in ListOfDbs:
@@ -79,7 +75,6 @@ def PlotData(DataDict, means, error):
 
 	## the data
 	N = len(ListOfDbs)
-
 
 	## necessary variables
 	ind = np.arange(N)                # the x locations for the groups

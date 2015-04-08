@@ -112,12 +112,15 @@ class SmileExperiment:
 		shuffle(ListOfFiles) # Random File Example order
 
 		#List of dbs to be compared 
-		ListOfDbs = [(0, 0)
-					,(0, 5)		
-					,(-5, 5)	
-					,(-5, 10)	
-					,(-10, 10)	
-					]
+		# ListOfDbs = [(0, 0)
+		# 			,(0, 5)		
+		# 			,(-5, 5)	
+		# 			,(-5, 10)	
+		# 			,(-10, 10)	
+		# 			]
+
+		ListOfDbs = [(-10, 10)]
+
 
 		Trials = []
 		for Name in ListOfFiles:
@@ -127,6 +130,7 @@ class SmileExperiment:
 				Trials.append(NewPair)
 		shuffle(Trials)
 		return Trials
+
 	def WriteCompleted(self, True):
 		with open(self.ResultsName, 'rb') as file1, open('aux.csv', 'wb') as aux:
 			reader = csv.reader(file1)
