@@ -11,7 +11,7 @@ import codecs
 class SmileExperiment:
 	def __init__(self):
 		self.win 		= visual.Window(size=(1280, 800), pos=None, color=(255, 255, 255))
-		self.mouse 		= event.Mouse(visible = True, newPos = False, win = self.win)
+		self.mouse 		= event.Mouse(visible = True, win = self.win)
 		self.trialClock = core.Clock()
 		self.expClock 	= core.Clock()
 		self.clickGap 	= .1 #seconds
