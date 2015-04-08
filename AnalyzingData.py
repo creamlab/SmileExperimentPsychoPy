@@ -3,15 +3,13 @@ import glob
 import numpy as np
 import matplotlib.pyplot as plt
 
+ListOfDbs = [(0, 0)
+			,(0, 5)		
+			,(-5, 5)	
+			,(-5, 10)	
+			,(-10, 10)	
+			]
 
-# ListOfDbs = [(0, 0)
-# 			,(0, 5)		
-# 			,(-5, 5)	
-# 			,(-5, 10)	
-# 			,(-10, 10)	
-# 			]
-
-ListOfDbs = [(-10, 10)]			
 
 def IsCompleted(file):
 	Completed = False
