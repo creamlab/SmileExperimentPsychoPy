@@ -12,7 +12,7 @@ import codecs
 class SmileExperiment:
 	def __init__(self):
 		self.win 		= visual.Window(size=(1280, 800), pos=None, color=(255, 255, 255))
-		self.mouse 		= event.Mouse(visible = True, newPos = False, win = self.win)
+		self.mouse 		= event.Mouse(visible = True, win = self.win)
 		self.trialClock = core.Clock()
 		self.expClock 	= core.Clock()
 		self.clickGap 	= .1 #seconds
@@ -112,12 +112,12 @@ class SmileExperiment:
 		shuffle(ListOfFiles) # Random File Example order
 
 		#List of dbs to be compared 
-		ListOfDbs = [(0, 0)
-					,(0, 5)		
-					,(-5, 5)	
-					,(-5, 10)	
-					,(-10, 10)	
-					]
+		# ListOfDbs = [(0, 0)
+		# 			,(0, 5)		
+		# 			,(-5, 5)	
+		# 			,(-5, 10)	
+		# 			,(-10, 10)	
+		# 			]
 
 		ListOfDbs = [(-10, 10)]
 
@@ -233,8 +233,8 @@ class SmileExperiment:
 			self.S2.SetSound(Path + SoundB)
 			self.ratingScale.reset(True)
 
-			print "Le Gain de A est : "+ str(SoundA[0: SoundA.find("_")])
-			print "Le Gain de B est : "+ str(SoundB[0: SoundB.find("_")])
+			#print "Le Gain de A est : "+ str(SoundA[0: SoundA.find("_")])
+			#print "Le Gain de B est : "+ str(SoundB[0: SoundB.find("_")])
 
 			while self.ratingScale.noResponse:
 				self.ratingScale.draw()
