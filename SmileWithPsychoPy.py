@@ -233,8 +233,8 @@ class SmileExperiment:
 			self.S2.SetSound(Path + SoundB)
 			self.ratingScale.reset(True)
 
-			print "Le Gain de A est : "+ str(SoundA[0: SoundA.find("_")])
-			print "Le Gain de B est : "+ str(SoundB[0: SoundB.find("_")])
+			#print "Le Gain de A est : "+ str(SoundA[0: SoundA.find("_")])
+			#print "Le Gain de B est : "+ str(SoundB[0: SoundB.find("_")])
 
 			while self.ratingScale.noResponse:
 				self.ratingScale.draw()
