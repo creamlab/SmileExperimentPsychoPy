@@ -19,7 +19,7 @@ class SmileExperiment:
 		self.clickGap 	= .1 #seconds
 		self.ratingScale = None
 
-		self.s			= Server().boot() #Audio Server - Important for Playing Audio Files
+		self.s			= Server(duplex=0).boot() #Audio Server - Important for Playing Audio Files
 		self.s.start() # Start audio server
 
 		self.S1 = ImageForSound(	pos 		= ( - 0.6, - 0.4 )
@@ -64,21 +64,20 @@ class SmileExperiment:
 
 		#For Writing Results
 		TotalFiles = len(glob.glob('participant data/*.csv')) + 1
-		self.ResultsName = "participant data/Results_"+ str(TotalFiles) +".csv"
+		self.ResultsName = "participant data/Results_" + str(TotalFiles) + ".csv"
 		self.fieldnames  = ['File_A', 'File_B', 'Note', 'DecisionTime','Category', 'freq', 'Cue','A Gain', 'B Gain', 'Age', 'Sex', 'Completed']
-		
-		with open(self.ResultsName, 'w') as csvfile:
-			writer		= csv.DictWriter(csvfile, fieldnames = self.fieldnames)
+
+		with open(self.ResultsName, 'w+') as csvfile:
+			writer = csv.DictWriter(csvfile, fieldnames = self.fieldnames)
 			writer.writeheader()
 
-	# Mouse Functions
 	def MouseClick(self):
-		c, c_old 	= (0,0)
+		c, c_old 	= (0, 0)
 		while True :
 			any_press 	= self.mouse.getPressed()
 			c 			= self.trialClock.getTime()
 			b1_press 	= any_press[0]
-			time.sleep(0.01) # For controlling the process from taking too much CPU 
+			time.sleep(0.01)  # For controlling the process from taking too much CPU
 			if b1_press and c - c_old > self.clickGap:
 				c_old = c
 				return self.mouse.getPos()

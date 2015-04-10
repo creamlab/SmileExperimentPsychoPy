@@ -7,10 +7,10 @@ from numpy import linspace
 from DSP.NormalizeAudioFiles import *
 
 def playFileWithEq( boo, fr, Q):
-	s = Server().boot()
+	s = Server(duplex=0).boot()
 	s.start()
 
-	FName = "experiment data/Sounds For Stimuli/C1.wav"
+	FName = "experiment data/Sounds For Stimuli/M1.wav"
 	sf 	  = SfPlayer(FName, speed = 1, loop=False)
 	trig  = TrigRand(sf['trig'])
 	eq    = EQ(sf, freq=fr, q=Q, boost=boo, type=0)
@@ -107,14 +107,14 @@ def GeneratePinkNoiseFile(duration):
 
 #GeneratePinkNoiseFile(duration = 2)
 
-ListOfboosts = [ -10 , -5, 0, 5, 10]
+#ListOfboosts = [ -10 , -5, 0, 5, 10]
 fr    = 4000
 Q 	  = 0.6
 
-for boost in ListOfboosts:
-	PeakFilterWavFiles(boost, fr, Q)
-
-#playFileWithEq(boo, fr, Q)
+#for boost in ListOfboosts:
+#	PeakFilterWavFiles(boost, fr, Q)
+boo = 2
+playFileWithEq(boo, fr, Q)
 #RisingPeakFilterInWavFiles(Start = -5, Stop = 10, fr = 3000, Q = 2)
 
 
