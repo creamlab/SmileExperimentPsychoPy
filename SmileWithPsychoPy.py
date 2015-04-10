@@ -12,7 +12,7 @@ import codecs
 
 class SmileExperiment:
 	def __init__(self):
-		self.win 		= visual.Window(size=(1280, 800), pos=None, color=(255, 255, 255))
+		self.win 		= visual.Window(size=(1280, 800), pos=None, color=(255, 255, 255), allowGUI = True)
 		self.mouse 		= event.Mouse(visible = True, win = self.win)
 		self.trialClock = core.Clock()
 		self.expClock 	= core.Clock()
@@ -22,7 +22,7 @@ class SmileExperiment:
 		self.s			= Server().boot() #Audio Server - Important for Playing Audio Files
 		self.s.start() # Start audio server
 
-		self.S1 = ImageForSound(	pos 		= ( 0.3, 0.6 )
+		self.S1 = ImageForSound(	pos 		= ( - 0.6, - 0.4 )
 							, Image 			= "experiment data/pics/play.png"
 							, ClickedImage	 	= "experiment data/pics/play_small.png"
 							, win				= self.win
@@ -30,7 +30,7 @@ class SmileExperiment:
 							, SoundName 		= "experiment data/sounds/C1.wav"
 							) 
 
-		self.S2 = ImageForSound(	pos 		= ( + 0.3, 0.3)
+		self.S2 = ImageForSound(	pos 		= ( + 0.6 , -0.4)
 							, Image 			= "experiment data/pics/play.png"
 							, ClickedImage	 	= "experiment data/pics/play_small.png"
 							, win 				= self.win
@@ -58,18 +58,7 @@ class SmileExperiment:
 		self.ArrowL 	= visual.ImageStim(self.win, image = "experiment data/pics/arrow_l.png", mask = None, units = '', pos = ( -0.47, -0.4))
 
 		#Son A and B text
-		self.TxtSonA	= visual.TextStim(self.win, text = u"Par rapport à ", pos = ( -0.1, 0.6), color = 'black')
-		self.TxtSonB  	= visual.TextStim(self.win, text = "trouvez-vous que ", pos = ( -0.1, 0.3), color = 'black')
-		self.TxtEst  	= visual.TextStim(self.win, text = "est dit avec : ", pos = ( -0, 0), color = 'black')
-
-
-		PasSouriant 	= "beaucoup moins de sourire"
-		TresSouriant 	= "beaucoup plus de sourire" # Sorry, no accents
-		
-		self.PasSouriante  		= visual.TextStim(self.win, text = PasSouriant, pos = ( -0.75, -0.4), color = 'black')
-		self.TresSouriante  	= visual.TextStim(self.win, text = TresSouriant, pos = ( 0.7, -0.4), color = 'black')
-		self.PasSouriante.height 	= 0.06
-		self.TresSouriante.height 	= 0.06
+		self.TxtEst  	= visual.TextStim(self.win, text = "Quel est le locuteur le plus souriant?", pos = ( -0, 0), color = 'black')
 
 		self.MidleLine	= visual.Line(self.win, start=(0, -0.45), end=(0, -0.35), lineColor = 'black', lineWidth=10)
 
@@ -102,7 +91,7 @@ class SmileExperiment:
 		self.S2.ImgContainer.draw()
 		self.win.flip()
 
-	def CreateListOfFile(self,):
+	def CreateListOfFile(self):
 
 		#List of all Files from which a stimulus has to be maid
 		ListOfFiles = []
@@ -113,14 +102,12 @@ class SmileExperiment:
 		shuffle(ListOfFiles) # Random File Example order
 
 		#List of dbs to be compared 
-		# ListOfDbs = [(0, 0)
-		# 			,(0, 5)		
-		# 			,(-5, 5)	
-		# 			,(-5, 10)	
-		# 			,(-10, 10)	
-		# 			]
-
-		ListOfDbs = [(-10, 10)]
+		ListOfDbs = [(0, 0)
+					,(0, 5)		
+					,(-5, 5)	
+					,(-5, 10)	
+					,(-10, 10)	
+					]
 
 
 		Trials = []
@@ -170,11 +157,7 @@ class SmileExperiment:
 		core.wait(duration) # Pause 5 s, so you get a chance to see it!
 	
 	def AutoDrawForAll(self, BoolAutoDraw):
-		self.TxtSonA.autoDraw 			= BoolAutoDraw
-		self.TxtSonB.autoDraw 			= BoolAutoDraw
 		self.TxtEst.autoDraw 			= BoolAutoDraw
-		self.PasSouriante.autoDraw  	= BoolAutoDraw
-		self.TresSouriante.autoDraw 	= BoolAutoDraw
 		self.S2.ImgContainer.autoDraw 	= BoolAutoDraw
 		self.S1.ImgContainer.autoDraw 	= BoolAutoDraw
 		self.ratingScale.autoDraw 		= BoolAutoDraw

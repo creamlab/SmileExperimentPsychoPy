@@ -16,4 +16,28 @@ sudo easy_install pip
 sudo pip install pyglet
 sudo pip install Pillow
 
+
+
 SmileWithPsychoPy.py = Creates an experimental protocol for the smile experience.
+
+
+
+3- Software and packages used:
+Soft needed:
+	- Sublime Text/ Pycharm
+	- python 2.7 
+	- psychopy
+	- Macports (10.7 or higher)
+	- pip
+	- Xcode with gcc
+	- git
+	- Python packages: numpy, scipy, matplotlib, pyo, and others...
+	- Source Tree
+	- Github Account
+
+
+
+
+
+
+

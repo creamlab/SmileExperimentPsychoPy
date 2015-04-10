@@ -30,7 +30,7 @@ def PeakFilterWavFiles( boo, fr, Q):
 	s = Server(duplex=0, audio="offline").boot()
 
 	# output folder
-	recpath = os.path.join(os.path.expanduser("~"), "Desktop/Cream/Experiments/SmileExperimentPsychoPy/experiment data", "SoundsForExperiment")
+	recpath = os.getcwd() + "/experiment data/SoundsForExperiment"
 	if not os.path.isdir(recpath):
 		os.mkdir(recpath)
 

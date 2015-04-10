@@ -2,12 +2,52 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6de44f4-3f49-4c4d-ab0a-249a79de3d59" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/designsonore.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/experiment data/Sounds For Stimuli/Pn.wav" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_Pn.wav" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_Pn.wav" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_Pn.wav" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_Pn.wav" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_Pn.wav" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/participant data/Results_1.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/participant data/Results_2.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/participant data/Results_3.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/participant data/Results_4.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/participant data/Results_5.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/participant data/Results_6.csv" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test.sublime-workspace" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_F1.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_F1.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_F2.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_F2.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_F3.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_F3.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_M1.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_M1.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_M2.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_M2.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_M3.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-10_M3.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_F1.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_F1.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_F2.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_F2.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_F3.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_F3.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_M1.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_M1.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_M2.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_M2.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_M3.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/-5_M3.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_F1.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_F1.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_F2.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_F2.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_F3.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_F3.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_M1.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_M1.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_M2.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_M2.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_M3.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/0_M3.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_F1.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_F1.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_F2.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_F2.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_F3.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_F3.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_M1.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_M1.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_M2.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_M2.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_M3.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/10_M3.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_F1.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_F1.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_F2.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_F2.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_F3.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_F3.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_M1.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_M1.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_M2.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_M2.wav" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_M3.wav" afterPath="$PROJECT_DIR$/experiment data/SoundsForExperiment/5_M3.wav" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CreatingStimuli.py" afterPath="$PROJECT_DIR$/CreatingStimuli.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/SmileExperimentPsychoPy.iml" afterPath="$PROJECT_DIR$/.idea/SmileExperimentPsychoPy.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Read Me.txt" afterPath="$PROJECT_DIR$/Read Me.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SmileWithPsychoPy.py" afterPath="$PROJECT_DIR$/SmileWithPsychoPy.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SmileExperimentPsychoPy.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,7 +74,7 @@
       <file leaf-file-name="SmileWithPsychoPy.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SmileWithPsychoPy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4290">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4035">
               <caret line="28" column="54" selection-start-line="28" selection-start-column="54" selection-end-line="28" selection-end-column="54" />
               <folding>
                 <element signature="e#17#74#0" expanded="true" />
@@ -46,8 +86,8 @@
       <file leaf-file-name="CreatingStimuli.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CreatingStimuli.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28950864" vertical-offset="277" max-vertical-offset="1890">
-              <caret line="33" column="34" selection-start-line="33" selection-start-column="34" selection-end-line="34" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.20982736" vertical-offset="337" max-vertical-offset="1890">
+              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -632,8 +672,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CreatingStimuli.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28950864" vertical-offset="277" max-vertical-offset="1890">
-          <caret line="33" column="34" selection-start-line="33" selection-start-column="34" selection-end-line="34" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.20982736" vertical-offset="337" max-vertical-offset="1890">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
           </folding>
