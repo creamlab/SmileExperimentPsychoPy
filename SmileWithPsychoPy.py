@@ -1,6 +1,7 @@
 # coding=utf-8
 
-from psychopy import visual, core, event, visual, logging #import some libraries from PsychoPy
+
+from psychopy import visual, core, event, visual, logging
 from PsychopyObjects.ImageForSound import *
 from PsychopyObjects import Button
 import glob
@@ -93,7 +94,7 @@ class SmileExperiment:
 				c_old = c
 				return self.mouse.getPos()
 
-    # Display Functions
+	#Display Functions
 	def generateDisplay(self):
 		self.AutoDrawForAll(BoolAutoDraw = True)
 		
@@ -131,14 +132,14 @@ class SmileExperiment:
 		shuffle(Trials)
 		return Trials
 
-	def WriteCompleted(self, True):
+	def WriteCompleted(self, bool):
 		with open(self.ResultsName, 'rb') as file1, open('aux.csv', 'wb') as aux:
 			reader = csv.reader(file1)
 			writer = csv.writer(aux)
 			IndexCompleted = self.fieldnames.index('Completed')
 			for i, row in enumerate(reader):
 				if i == 1:
-					row[IndexCompleted] = 'True'
+					row[IndexCompleted] = bool
 				writer.writerow(row)
 
 			os.rename('aux.csv', self.ResultsName)
@@ -208,6 +209,7 @@ class SmileExperiment:
 	# ----- Main Experiment -------
 	def RunExperiment(self):
 		#Init
+
 		ITItime = 0.5 #Inter Trial Interval
 
 		#Subject Info
@@ -222,7 +224,7 @@ class SmileExperiment:
 		self.TextStimuliUntillKey(Fname = "Text/Intro.txt")
 		self.ITI(ITItime)
 		self.generateDisplay()
-	
+
 		Path = "experiment data/SoundsForExperiment/"
 
 		for NamePair in self.CreateListOfFile():
@@ -254,26 +256,25 @@ class SmileExperiment:
 			with open(self.ResultsName, 'a') as csvfile :
 				writer = csv.DictWriter(csvfile, fieldnames = self.fieldnames)
 				writer.writerow({ 'File_A': Path + SoundA
-								, 'File_B': Path + SoundB
-								, 'Note'  : rating
-								, 'DecisionTime' : decisionTime
-								, 'A Gain'  : GainA
-								, 'B Gain'  : GainB
-								, 'freq'  : 2500
-								, 'Cue'	  : 1.12
-								})
-
-			self.ISI(0.7)
+				, 'File_B': Path + SoundB
+				, 'Note'  : rating
+				, 'DecisionTime' : decisionTime
+				, 'A Gain'  : GainA
+				, 'B Gain'  : GainB
+				, 'freq'  : 2500
+				, 'Cue'	  : 1.12
+								  })
+		self.ISI(0.7)
 
 		self.ITI(ITItime)
 		self.WriteCompleted(True)
-		
+
 		self.EndOfExperiment()
 
 ###
 ### End of experiment definition.
 
-##Main Script - Calling main function and creating object : 
+### Main Script - Calling main function and creating object :
 exp = SmileExperiment()
 exp.RunExperiment()
 
