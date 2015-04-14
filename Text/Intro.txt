@@ -1,6 +1,6 @@
-Nous sommes capables de juger par l’écoute d’une voix si l’interlocuteur est entrain de sourire ou non. C’est la tâche demandée dans cette expérience.
+Nous sommes capables de juger par l’écoute de voix l’interlocuteur le plus souriant. C’est la tâche demandée dans cette expérience.
 
-Vous allez entendre des séries de deux enregistrements. À chaque fois vous devez juger à quel point la deuxième voix a été produite avec un sourire par rapport à la première.
+Vous allez entendre des séries de deux enregistrements. À chaque fois vous devez juger quel locuteur semble être plus souriant.
 
 Toutes les comparisons se font à la souris : cliquer sur les sons pour les jouer, cliquer sur le slider pour indiquer votre jugement puis valider votre choix.
 

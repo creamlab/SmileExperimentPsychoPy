@@ -58,14 +58,14 @@ class SmileExperiment:
 		self.ArrowL 	= visual.ImageStim(self.win, image = "experiment data/pics/arrow_l.png", mask = None, units = '', pos = ( -0.47, -0.4))
 
 		#Son A and B text
-		self.TxtEst  	= visual.TextStim(self.win, text = "Quel est le locuteur le plus souriant?", pos = ( -0, 0), color = 'black')
+		self.TxtEst  	= visual.TextStim(self.win, text = "Quel locuteur vous semble le plus souriant?", pos = ( -0, 0), color = 'black')
 
 		self.MidleLine	= visual.Line(self.win, start=(0, -0.45), end=(0, -0.35), lineColor = 'black', lineWidth=10)
 
 		#For Writing Results
 		TotalFiles = len(glob.glob('participant data/*.csv')) + 1
 		self.ResultsName = "participant data/Results_" + str(TotalFiles) + ".csv"
-		self.fieldnames  = ['File_A', 'File_B', 'Note', 'DecisionTime','Category', 'freq', 'Cue','A Gain', 'B Gain', 'Age', 'Sex', 'Completed']
+		self.fieldnames  = ['File_A', 'File_B', 'Note', 'DecisionTime','SpeakerGenre', 'Sentence', 'freq', 'Cue','A Gain', 'B Gain', 'Age', 'Sex', 'Completed']
 
 		with open(self.ResultsName, 'w+') as csvfile:
 			writer = csv.DictWriter(csvfile, fieldnames = self.fieldnames)
@@ -102,8 +102,14 @@ class SmileExperiment:
 
 		#List of dbs to be compared 
 		ListOfDbs = [(0, 0)
-					,(0, 5)		
-					,(-5, 5)	
+					,(5, 10)
+					,(0, 5)
+					,(-5, 0)
+					,(-10, -5)
+					,(-10, 0)			
+					,(-5, 5)
+					,(0, 10)	
+					,(-10, 5)
 					,(-5, 10)	
 					,(-10, 10)	
 					]
@@ -234,6 +240,8 @@ class SmileExperiment:
 			GainA	= int(SoundA[0: SoundA.find("_")])
 			GainB	= int(SoundB[0: SoundB.find("_")])
 
+			Category = SoundA[SoundA.find("_")+1: SoundA.find("_") + 2] # parse Sound Name
+			Sentence = SoundA[SoundA.find("_")+2: SoundA.find("_") + 3] # parse Sound Name
 			# Write decisions :
 			with open(self.ResultsName, 'a') as csvfile :
 				writer = csv.DictWriter(csvfile, fieldnames = self.fieldnames)
@@ -243,10 +251,12 @@ class SmileExperiment:
 				, 'DecisionTime' : decisionTime
 				, 'A Gain'  : GainA
 				, 'B Gain'  : GainB
-				, 'freq'  : 2500
-				, 'Cue'	  : 1.12
+				, 'freq'  : 4000
+				, 'Cue'	  : 0.6
+				, 'SpeakerGenre' : Category
+				, 'Sentence' : Sentence
 								  })
-		self.ISI(0.7)
+			self.ISI(0.7)
 
 		self.ITI(ITItime)
 		self.WriteCompleted(True)
