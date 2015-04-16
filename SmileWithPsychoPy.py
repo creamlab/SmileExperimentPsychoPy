@@ -234,7 +234,6 @@ class SmileExperiment:
 				self.S2.Clicked(ClickPos, self.s)
 
 			rating 			= self.ratingScale.getRating()
-			print "Le rating est : "+ str(rating)
 			decisionTime 	= self.ratingScale.getRT()
 
 			GainA	= int(SoundA[0: SoundA.find("_")])

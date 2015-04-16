@@ -36,6 +36,55 @@ Soft needed:
 	- Github Account
 
 
+4- How to run the Smile experiment on a MAC in 5 minutes:
+
+	1- Install a Python environment
+	
+	2- install mac ports for your OS:
+		https://www.macports.org/install.php
+
+	3- Install psychopy with the command line:
+		sudo easy_install -N -Z -U psychopy
+
+	4- Install pip by following the instructions here:
+		https://pip.pypa.io/en/latest/installing.html
+		==> Download get-pip.py then cd until the directory where you saved it then run the following command in a terminal:
+		sudo python get-pip.py
+		Then Enter your password…
+
+	5- Install pyglet, Paste this in a terminal:
+		sudo pip install pyglet
+		Then Enter your password…
+
+	6- Install pillow:
+		sudo pip install Pillow
+		Then Enter your password…
+
+	7- Install pyo from:
+		http://ajaxsoundstudio.com/software/pyo/
+
+	8: Go! 
+		Run SmileWithPsychoPy.py (in the main folder of the experiment project) 
+
+
+
+5- How to Create stimulis
+	1- Follow the steps for running the Smile experiment (4)
+	2- Install Xcode (App store)
+	3- Install Homebrew:
+		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+		
+	4- Install libsnd:
+		brew install libsndfile
+	5- Link libsnd:
+		brew link --overwrite libsndfile
+		
+	5- Install scikits.audiolab:
+		sudo easy_install scikits.audiolab
+		
+
+
+
 
 
 

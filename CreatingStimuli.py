@@ -46,7 +46,13 @@ def PeakFilterWavFiles( boo, fr, Q):
 		
 		FName = str(file)
 		sf 	  = SfPlayer(FName, speed = 1, loop = False)
-		eq    = EQ(sf, freq=fr, q=Q, boost=boo, type=0, mul = 0.1)
+
+		#high-pass
+		hp1    = Biquad(sf, freq = 250, type = 1)
+		hp2    = Biquad(hp1, freq = 240, type = 1)
+
+		#Peak filter
+		eq    = EQ(hp2, freq=fr, q=Q, boost=boo, type=0, mul = 0.8)
 		eq 	  = eq.mix(2)
 		eq.out()
 
@@ -107,14 +113,12 @@ def GeneratePinkNoiseFile(duration):
 
 #GeneratePinkNoiseFile(duration = 2)
 
-#ListOfboosts = [ -10 , -5, 0, 5, 10]
+ListOfboosts = [ -10 , -5, 0, 5, 10]
 fr    = 4000
 Q 	  = 0.6
 
-#for boost in ListOfboosts:
-#	PeakFilterWavFiles(boost, fr, Q)
-boo = 2
-playFileWithEq(boo, fr, Q)
-#RisingPeakFilterInWavFiles(Start = -5, Stop = 10, fr = 3000, Q = 2)
+for boost in ListOfboosts:
+	PeakFilterWavFiles(boost, fr, Q)
+
 
 
