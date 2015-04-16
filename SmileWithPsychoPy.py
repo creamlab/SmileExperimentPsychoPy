@@ -1,6 +1,5 @@
 # coding=utf-8
 
-
 from psychopy import visual, core, event, visual, logging
 from PsychopyObjects.ImageForSound import *
 from PsychopyObjects import Button
@@ -12,7 +11,7 @@ import codecs
 
 class SmileExperiment:
 	def __init__(self):
-		self.win 		= visual.Window(size=(1280, 800), pos=None, color=(255, 255, 255), allowGUI = True)
+		self.win 		= visual.Window(size=(1280, 800), pos=None, color=(255, 255, 255), allowGUI = True) # Add : fullscr=True before experience
 		self.mouse 		= event.Mouse(visible = True, win = self.win)
 		self.trialClock = core.Clock()
 		self.expClock 	= core.Clock()
@@ -57,10 +56,12 @@ class SmileExperiment:
 		self.ArrowR		= visual.ImageStim(self.win, image = "experiment data/pics/arrow_r.png", mask = None, units = '', pos = ( 0.45, -0.4))
 		self.ArrowL 	= visual.ImageStim(self.win, image = "experiment data/pics/arrow_l.png", mask = None, units = '', pos = ( -0.47, -0.4))
 
-		#Son A and B text
-		self.TxtEst  	= visual.TextStim(self.win, text = "Quel locuteur vous semble le plus souriant?", pos = ( -0, 0), color = 'black')
+		#Question
+		self.TxtEst  	= visual.TextStim(self.win, text = u"Quel locuteur vous semble être le plus souriant?", pos = ( -0, 0), color = 'black')
 
 		self.MidleLine	= visual.Line(self.win, start=(0, -0.45), end=(0, -0.35), lineColor = 'black', lineWidth=10)
+
+		self.TxtMid  	= visual.TextStim(self.win, text = u"Pas de différence", pos = (0, -0.5), color = 'black', height = 0.05)
 
 		#For Writing Results
 		TotalFiles = len(glob.glob('participant data/*.csv')) + 1
@@ -169,6 +170,7 @@ class SmileExperiment:
 		self.ArrowR.autoDraw			= BoolAutoDraw
 		self.ArrowL.autoDraw			= BoolAutoDraw
 		self.MidleLine.autoDraw			= BoolAutoDraw
+		self.TxtMid.autoDraw 			= BoolAutoDraw
 
 	def ISI(self,duration): #Inter Stimulus Interval
 		self.AutoDrawForAll(BoolAutoDraw = False)

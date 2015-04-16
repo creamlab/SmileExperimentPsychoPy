@@ -52,7 +52,7 @@ def PeakFilterWavFiles( boo, fr, Q):
 		hp2    = Biquad(hp1, freq = 240, type = 1)
 
 		#Peak filter
-		eq    = EQ(hp2, freq=fr, q=Q, boost=boo, type=0, mul = 0.8)
+		eq    = EQ(hp2, freq=fr, q=Q, boost=boo, type=0, mul = 0.4)
 		eq 	  = eq.mix(2)
 		eq.out()
 
@@ -114,7 +114,7 @@ def GeneratePinkNoiseFile(duration):
 #GeneratePinkNoiseFile(duration = 2)
 
 ListOfboosts = [ -10 , -5, 0, 5, 10]
-fr    = 4000
+fr    = 3900
 Q 	  = 0.6
 
 for boost in ListOfboosts:
