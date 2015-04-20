@@ -43,6 +43,9 @@ class ImageForSound(Button):
 			self.ImgContainer.draw()
 			self.win.flip()
 			self.ImgContainer.autoDraw = True
+			return True
+		else:
+			return False
 				
 
 	#Setters :

@@ -1,5 +1,4 @@
 # coding=utf-8
-
 from psychopy import visual, core, event, visual, logging
 from PsychopyObjects.ImageForSound import *
 from PsychopyObjects import Button
@@ -7,7 +6,6 @@ import glob
 import csv
 from random import shuffle
 import codecs
-#from psychopy import gui
 
 class SmileExperiment:
 	def __init__(self):
@@ -66,7 +64,7 @@ class SmileExperiment:
 		#For Writing Results
 		TotalFiles = len(glob.glob('participant data/*.csv')) + 1
 		self.ResultsName = "participant data/Results_" + str(TotalFiles) + ".csv"
-		self.fieldnames  = ['File_A', 'File_B', 'Note', 'DecisionTime','SpeakerGenre', 'Sentence', 'freq', 'Cue','A Gain', 'B Gain', 'Age', 'Sex', 'Completed']
+		self.fieldnames  = ['File_A', 'File_B', 'Note', 'DecisionTime','SpeakerGenre', 'Sentence', 'freq', 'Cue','A Gain', 'B Gain', 'NumberOfPlaysSoundA', 'NumberOfPlaysSoundB','Age', 'Sex', 'Completed']
 
 		with open(self.ResultsName, 'w+') as csvfile:
 			writer = csv.DictWriter(csvfile, fieldnames = self.fieldnames)
@@ -202,14 +200,6 @@ class SmileExperiment:
 
 		ITItime = 0.5 #Inter Trial Interval
 
-		#Subject Info
-		#info = {'Observer':'jwp', 'GratingOri':45, 'ExpVersion': 1.1, 'Group': ['Test', 'Control']}
-		#infoDlg = gui.DlgFromDict(dictionary=info, title='TestExperiment', fixed=['ExpVersion'])
-		#print "juste avant Dlg"
-		#if infoDlg.OK:
-		#	print info
-		#else: print 'User Cancelled'
-
 		#Intro
 		self.TextStimuliUntillKey(Fname = "Text/Intro.txt")
 		self.ITI(ITItime)
@@ -220,6 +210,8 @@ class SmileExperiment:
 		for NamePair in self.CreateListOfFile():
 			SoundA = NamePair[0]
 			SoundB = NamePair[1]
+			NumberOfPlaysSoundA = 0
+			NumberOfPlaysSoundB = 0
 
 			self.S1.SetSound(Path + SoundA)
 			self.S2.SetSound(Path + SoundB)
@@ -232,8 +224,11 @@ class SmileExperiment:
 				self.ratingScale.draw()
 				self.win.flip()
 				ClickPos = self.MouseClick()
-				self.S1.Clicked(ClickPos, self.s)
-				self.S2.Clicked(ClickPos, self.s)
+				if self.S1.Clicked(ClickPos, self.s):
+					NumberOfPlaysSoundA = NumberOfPlaysSoundA + 1
+
+				if self.S2.Clicked(ClickPos, self.s):
+					NumberOfPlaysSoundB = NumberOfPlaysSoundB + 1
 
 			rating 			= self.ratingScale.getRating()
 			decisionTime 	= self.ratingScale.getRT()
@@ -243,7 +238,8 @@ class SmileExperiment:
 
 			Category = SoundA[SoundA.find("_")+1: SoundA.find("_") + 2] # parse Sound Name
 			Sentence = SoundA[SoundA.find("_")+2: SoundA.find("_") + 3] # parse Sound Name
-			# Write decisions :
+			
+			# Write results :
 			with open(self.ResultsName, 'a') as csvfile :
 				writer = csv.DictWriter(csvfile, fieldnames = self.fieldnames)
 				writer.writerow({ 'File_A': Path + SoundA
@@ -256,7 +252,10 @@ class SmileExperiment:
 				, 'Cue'	  : 0.6
 				, 'SpeakerGenre' : Category
 				, 'Sentence' : Sentence
-								  })
+				, 'NumberOfPlaysSoundA' : NumberOfPlaysSoundA
+				, 'NumberOfPlaysSoundB' : NumberOfPlaysSoundB
+				})
+
 			self.ISI(0.7)
 
 		self.ITI(ITItime)
